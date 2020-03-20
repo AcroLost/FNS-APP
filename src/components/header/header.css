@@ -1,0 +1,18 @@
+.header {
+  background-color: #d3cfcf;
+  vertical-align: top;
+}
+
+.header .header__wrapper {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.header__wrapper span {
+  font-size: 24px;
+  font-weight: 500;
+  font-family: Roboto;
+
+  margin-left: 150px;
+}
