@@ -41,19 +41,31 @@ export default class App extends Component {
 
       this.setState({
         historyList
-      })
+      });
     }
   }
 
-  componentDidUpdate(prevState) {
-    if (prevState !== this.state.historyList) {
-      localStorage.setItem('company', JSON.stringify(this.state.historyList));
+  componentDidUpdate(prevState, prevProps) {
+    
+    localStorage.setItem('company', JSON.stringify(this.state.historyList));
+    
+    if (localStorage.getItem('company') !== null) {
+
+    const historyList = JSON.parse(localStorage.getItem('company'));
+    
+      if (historyList.length == 6) {
+        this.setState((state) =>{
+          return {
+            historyList: state.historyList.slice(1)
+          }
+        })
+      }
     }
+   
   }
 
   searchCompany = (name) => {
 
-    debugger;
     const newItem = { name }
 
     this.setState(({ historyList }) => {

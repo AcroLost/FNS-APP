@@ -2,7 +2,7 @@ import * as axios from "axios";
 
 export default class Service {
 
-  _apiKey = '&key=6b3db91841a9d0fd03f501f21959b38e1179d606';
+  _apiKey = '&key=637e30ffadc2a94268c4e700f29e623238c4d6c1';
   _apiFNS = 'https://api-fns.ru/api/search?q=';
   // _corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 

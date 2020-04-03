@@ -22,13 +22,16 @@ const QueryHistory = ({ historyList, onSearchCompany }) => {
                     onClick={() => onSearchCompany(item.name)}>
                     {item.name}
                 </p>
+
                 {/* <Divider /> */}
             </div>
         );
     });
 
     return (
-        <div style={{ marginLeft: 35 }}>
+        <div style={{
+            marginLeft: 35
+        }}>
 
             <p style={{
                 fontSize: 17,
