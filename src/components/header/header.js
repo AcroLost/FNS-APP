@@ -1,6 +1,7 @@
 import React from 'react';
 
-import './header.css';
+import './header.scss';
+import logo from '../../image/logo.png';
 
 const Header = () => {
 
@@ -9,7 +10,7 @@ const Header = () => {
 
             <div className="header__wrapper">
 
-                <img src={require('../../image/logo.png')} alt="logo" style={{ width: 65, height: 65 }} />
+                <img src={logo} alt="logo" />
 
                 <span>
                     ФНС поиск организаций
