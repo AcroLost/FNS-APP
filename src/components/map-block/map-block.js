@@ -10,14 +10,6 @@ export default class MapBlock extends Component {
 
   service = new Service();
 
-  state = {
-    query: []
-  }
-
-  // componentDidMount() {
-
-  // }
-
   render() {
 
     const { list, point, loading, verificatePartner, getStatement } = this.props;

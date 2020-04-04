@@ -46,22 +46,22 @@ export default class App extends Component {
   }
 
   componentDidUpdate(prevState, prevProps) {
-    
+
     localStorage.setItem('company', JSON.stringify(this.state.historyList));
-    
+
     if (localStorage.getItem('company') !== null) {
 
-    const historyList = JSON.parse(localStorage.getItem('company'));
-    
+      const historyList = JSON.parse(localStorage.getItem('company'));
+
       if (historyList.length == 6) {
-        this.setState((state) =>{
+        this.setState((state) => {
           return {
             historyList: state.historyList.slice(1)
           }
         })
       }
     }
-   
+
   }
 
   searchCompany = (name) => {
@@ -147,7 +147,9 @@ export default class App extends Component {
         <Header />
         <div className="search">
           <div style={{ paddingTop: 30 }} className="search__wrapper">
-            <div>
+            <div style={{
+              padding: 10
+            }}>
 
               <SearchBlock onSearchCompany={this.searchCompany} />
               <MapBlock list={list}

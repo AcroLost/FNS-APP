@@ -12,25 +12,24 @@ const QueryHistory = ({ historyList, onSearchCompany }) => {
 
         return (
             <div style={{
-                textAlign: 'left',
-                marginLeft: 15
+                textAlign: 'center'
             }}>
-                <p style={{
-                    cursor: 'pointer',
-                    textDecoration: 'underline'
+                <span style={{
+                    cursor: 'pointer'
                 }}
                     onClick={() => onSearchCompany(item.name)}>
                     {item.name}
-                </p>
-
-                {/* <Divider /> */}
+                </span>
+                <hr />
             </div>
         );
     });
 
     return (
         <div style={{
-            marginLeft: 35
+            marginLeft: 35,
+            background: 'white',
+            padding: '10px 20px'
         }}>
 
             <p style={{

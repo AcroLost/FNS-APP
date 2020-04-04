@@ -8,7 +8,9 @@ const CompanyDescription = ({ positive, negative }) => {
       {
         textAlign: 'left',
         width: 300,
-        marginLeft: 30
+        marginLeft: 30,
+        background: 'white',
+        padding: 10
       }}>
 
       <div>
@@ -18,12 +20,13 @@ const CompanyDescription = ({ positive, negative }) => {
 
             return <p style={{ marginLeft: 15 }}>
               <b>{item}:</b> {positive[item]}
-            </p>;
+            </p>
+
           })
         }
       </div>
-
-      <div style={{ marginTop: 50 }}>
+      <hr />
+      <div style={{ marginTop: 20 }}>
 
         <b>Негативные факторы:</b>
         {negative &&
