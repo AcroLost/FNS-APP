@@ -14,7 +14,7 @@ const CompanyDescription = ({ positive, negative }) => {
       }}>
 
       <div>
-        <b>Позитивные факторы:</b>
+        <b style={{ fontSize: 17 }}>Позитивные факторы:</b>
         {positive &&
           Object.keys(positive).map((item) => {
 
@@ -28,7 +28,7 @@ const CompanyDescription = ({ positive, negative }) => {
       <hr />
       <div style={{ marginTop: 20 }}>
 
-        <b>Негативные факторы:</b>
+        <b style={{ fontSize: 17 }}>Негативные факторы:</b>
         {negative &&
           Object.keys(negative).map((item) => {
 

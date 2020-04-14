@@ -13,7 +13,7 @@ const Header = () => {
                 <img src={logo} alt="logo" />
 
                 <span>
-                    ФНС поиск организаций
+                    ФНС проверка контрагента
                 </span>
 
             </div>

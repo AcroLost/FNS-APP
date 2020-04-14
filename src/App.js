@@ -12,6 +12,7 @@ import MapBlock from './components/map-block';
 import Header from './components/header/header';
 import QueryHistory from './components/query-history/queryHistory';
 import CompanyDescription from './components/company-description/CompanyDescription';
+import { VictoryBar, Bar, VictoryPie } from 'victory';
 export default class App extends Component {
 
   service = new Service();
@@ -106,9 +107,6 @@ export default class App extends Component {
           loading: false
         });
 
-        // this.setState({
-        //   loading: !this.state.loading
-        // });
       });
   }
 
@@ -139,6 +137,7 @@ export default class App extends Component {
 
   render() {
 
+
     const { list, point, loading, Positive, Negative, historyList } = this.state;
 
     return (
@@ -160,7 +159,7 @@ export default class App extends Component {
                 getStatement={this.onGetStatement} />
 
             </div>
-            {Positive && Negative
+            {Positive || Negative
               ? <CompanyDescription positive={Positive}
                 negative={Negative} />
 
@@ -168,8 +167,30 @@ export default class App extends Component {
             }
             <QueryHistory onSearchCompany={this.searchCompany}
               historyList={historyList} />
+
+
           </div>
+
+          {Positive || Negative
+            ? <VictoryPie style={{
+              parent: {
+                width: 350, height: 350
+              },
+              data: {
+                stroke: "#c43a31", strokeWidth: 1
+              }
+            }}
+              colorScale={["rgb(230, 118, 137)", "#74A8DA"]}
+              data={[
+                { x: 1, y: Positive.length },
+                { x: 2, y: Negative.length }
+              ]}
+            />
+            : null
+          }
+
         </div>
+
       </div>
     );
   }

@@ -55,7 +55,7 @@ export default class MapBlock extends Component {
           <div style={{ marginTop: 20 }}>
             <Button style={{ width: 200 }}
               type='primary'
-              onClick={verificatePartner}>Показать задолженности
+              onClick={verificatePartner}>Проверить контрагента
         </Button>
 
             <Button style={{

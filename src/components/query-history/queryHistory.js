@@ -1,5 +1,6 @@
 import React from 'react';
-import { Divider } from 'antd';
+
+import './queryHistory.scss'
 
 const QueryHistory = ({ historyList, onSearchCompany }) => {
 
@@ -11,7 +12,7 @@ const QueryHistory = ({ historyList, onSearchCompany }) => {
     const items = historyList.map((item) => {
 
         return (
-            <div style={{
+            <div className='history__item' style={{
                 textAlign: 'center'
             }}>
                 <span style={{
