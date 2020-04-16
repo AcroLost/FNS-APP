@@ -2,29 +2,26 @@ import * as axios from "axios";
 
 export default class Service {
 
-  _apiKey = '&key=637e30ffadc2a94268c4e700f29e623238c4d6c1';
+  _apiKey = '&key=e90167fd48d027677cfa47dd6181140243c355ad';
   _apiFNS = 'https://api-fns.ru/api/search?q=';
   // _corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 
   getResource = async (query) => {
 
-    const res = await axios.get(`${this._apiFNS}${query}${this._apiKey}`, {
+    const res = await axios.get(`${this._apiFNS}${query}${this._apiKey}`);
 
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    console.log(res);
+
     return res.data.items[0].ЮЛ;
     // return res;
   }
 
 
-  getCompany = async (name) => {
-    const res = await this.getResource(name);
+  getCompany = async (query) => {
+    const res = await axios.get(`${this._apiFNS}${query}${this._apiKey}`);
+    console.log(res.data.items);
 
-    return this._transformCompany(res);
+    return res.data.items;
+    // return this._transformCompany(res.data.items[0].ЮЛ);
   }
 
   _transformCompany = (company) => {
@@ -59,6 +56,12 @@ export default class Service {
     return `https://api-fns.ru/api/vyp?req=${INN}${this._apiKey}`;
   }
 
+  getFullInformation = async (INN) => {
+
+    const query = await axios.get(`https://api-fns.ru/api/egr?req=${INN}&key=${this._apiKey}`);
+
+    return query.data.items[0].ЮЛ;
+  }
 
   _apiKeyYandex = 'fbe27a07-f3ff-4ee7-b8a6-801e7e021216';
 

@@ -12,27 +12,25 @@ import MapBlock from './components/map-block';
 import Header from './components/header/header';
 import QueryHistory from './components/query-history/queryHistory';
 import CompanyDescription from './components/company-description/CompanyDescription';
-import { VictoryBar, Bar, VictoryPie } from 'victory';
-export default class App extends Component {
+import FullDescription from './components/fullDescription/fullDescription';
+import { Route, withRouter } from 'react-router-dom';
+import CompanyList from './components/companyList/companyList';
+
+class App extends Component {
 
   service = new Service();
 
   state = {
-    list: {
-      INN: null,
-      OGRN: null,
-      FullName: null,
-      Address: null,
-      Status: null,
-      Activity: null
-    },
-    point: [0, 0],
+    list: [],
+
     loading: false,
 
     Positive: null,
     Negative: null,
 
-    historyList: []
+    historyList: [],
+
+    fullInformation: null
   }
 
   componentDidMount() {
@@ -46,7 +44,7 @@ export default class App extends Component {
     }
   }
 
-  componentDidUpdate(prevState, prevProps) {
+  componentDidUpdate() {
 
     localStorage.setItem('company', JSON.stringify(this.state.historyList));
 
@@ -54,7 +52,7 @@ export default class App extends Component {
 
       const historyList = JSON.parse(localStorage.getItem('company'));
 
-      if (historyList.length == 6) {
+      if (historyList.length === 6) {
         this.setState((state) => {
           return {
             historyList: state.historyList.slice(1)
@@ -67,17 +65,12 @@ export default class App extends Component {
 
   searchCompany = (name) => {
 
+    this.props.history.push('/company_list');
     const newItem = { name }
 
-    this.setState(({ historyList }) => {
-      const newList = [
-        ...historyList,
-        newItem
-      ];
-
-      return {
-        historyList: newList
-      }
+    this.setState({
+      list: [],
+      historyList: [...this.state.historyList, newItem],
     })
 
 
@@ -91,25 +84,30 @@ export default class App extends Component {
       .getCompany(name)
       .then((list) => {
 
-        this.getCoordinates(list, list.Address);
+        this.getCoordinates(list);
       });
   }
 
   getCoordinates(list) {
 
-    this.service
-      .getCoord(list.Address)
 
-      .then((res) => {
-        this.setState({
-          list,
-          point: res.split(' '),
-          loading: false
-        });
+    list.map((i) => {
+      this.service
+        .getCoord(i.ЮЛ.АдресПолн)
 
-      });
+        .then((res) => {
+          this.setState({
+
+            list: [...this.state.list, { ...i, point: res.split(' ') }],
+          })
+        })
+
+    });
+
+    this.setState({
+      loading: false
+    })
   }
-
 
   verificatePartner = () => {
 
@@ -122,7 +120,6 @@ export default class App extends Component {
           Positive: res.Positive,
           Negative: res.Negative,
         });
-        console.log(this.state);
       })
   }
 
@@ -134,11 +131,21 @@ export default class App extends Component {
       })
   }
 
+  onGetInformation = () => {
+    this.service
+      .getFullInformation(this.state.list.INN)
+      .then((res) => {
+
+        this.setState({
+          fullInformation: res
+        })
+      })
+  }
+
 
   render() {
 
-
-    const { list, point, loading, Positive, Negative, historyList } = this.state;
+    const { list, loading, Positive, Negative, historyList, fullInformation } = this.state;
 
     return (
       <div className="main">
@@ -152,42 +159,37 @@ export default class App extends Component {
 
               <SearchBlock onSearchCompany={this.searchCompany} />
               <MapBlock list={list}
-                point={point}
                 onGetCoordinates={this.getCoordinates}
                 loading={loading}
                 verificatePartner={this.verificatePartner}
-                getStatement={this.onGetStatement} />
+                getStatement={this.onGetStatement}
+                getInformation={this.onGetInformation} />
 
             </div>
-            {Positive || Negative
-              ? <CompanyDescription positive={Positive}
-                negative={Negative} />
 
-              : null
-            }
+            <Route path='/check' render={() =>
+
+              <CompanyDescription status={list.Status}
+                positive={Positive}
+                negative={Negative} />}
+            />
+            <Route path='/full_information' render={() =>
+
+              <FullDescription information={fullInformation} />}
+            />
+
+            <Route path='/company_list' render={() =>
+
+              <CompanyList list={list} />}
+            />
+
             <QueryHistory onSearchCompany={this.searchCompany}
               historyList={historyList} />
 
 
           </div>
 
-          {Positive || Negative
-            ? <VictoryPie style={{
-              parent: {
-                width: 350, height: 350
-              },
-              data: {
-                stroke: "#c43a31", strokeWidth: 1
-              }
-            }}
-              colorScale={["rgb(230, 118, 137)", "#74A8DA"]}
-              data={[
-                { x: 1, y: Positive.length },
-                { x: 2, y: Negative.length }
-              ]}
-            />
-            : null
-          }
+          {/* <SliderShow /> */}
 
         </div>
 
@@ -195,4 +197,8 @@ export default class App extends Component {
     );
   }
 }
+
+const AppContainer = withRouter(App);
+
+export default AppContainer;
 

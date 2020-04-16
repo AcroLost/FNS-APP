@@ -1,17 +1,21 @@
 import React from 'react';
+import Chart from '../chart/chart';
 
-const CompanyDescription = ({ positive, negative }) => {
+import './companyDescription.scss';
+import { Spin } from 'antd';
+
+const CompanyDescription = ({ positive, negative, status }) => {
+
+
+  if (!positive || !negative) {
+    return <Spin size="large" />
+  }
+
+  const active = status === "Действующее" ? 'active' : 'unActive';
 
   return (
 
-    <div style={
-      {
-        textAlign: 'left',
-        width: 300,
-        marginLeft: 30,
-        background: 'white',
-        padding: 10
-      }}>
+    <div className="description">
 
       <div>
         <b style={{ fontSize: 17 }}>Позитивные факторы:</b>
@@ -38,6 +42,11 @@ const CompanyDescription = ({ positive, negative }) => {
           })
         }
       </div>
+      <hr />
+      <p>Статус: <span className={active}>{status}</span></p>
+
+      <Chart positive={positive}
+        negative={negative} />
     </div>
   );
 }

@@ -29,6 +29,7 @@ export default class SearchBlock extends Component {
         this.setState({
             inputValue: ''
         });
+
     }
 
     render() {
