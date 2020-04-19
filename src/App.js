@@ -13,8 +13,10 @@ import Header from './components/header/header';
 import QueryHistory from './components/query-history/queryHistory';
 import CompanyDescription from './components/company-description/CompanyDescription';
 import FullDescription from './components/fullDescription/fullDescription';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, NavLink } from 'react-router-dom';
 import CompanyList from './components/companyList/companyList';
+import { Button } from 'antd';
+import { DownloadOutlined } from '@ant-design/icons';
 
 class App extends Component {
 
@@ -22,6 +24,8 @@ class App extends Component {
 
   state = {
     list: [],
+    company: null,
+    error: false,
 
     loading: false,
 
@@ -65,6 +69,17 @@ class App extends Component {
 
   searchCompany = (name) => {
 
+    if (!name) {
+      this.setState({
+        error: true
+      })
+      return
+    } else {
+      this.setState({
+        error: false
+      })
+    }
+
     this.props.history.push('/company_list');
     const newItem = { name }
 
@@ -84,14 +99,20 @@ class App extends Component {
       .getCompany(name)
       .then((list) => {
 
-        this.getCoordinates(list);
+        list.map((item) => {
+
+          if (item.ЮЛ.ГдеНайдено === 'ИНН') {
+            this.getCoordinates([item]);
+          }
+        })
+
       });
   }
 
   getCoordinates(list) {
 
-
     list.map((i) => {
+      debugger;
       this.service
         .getCoord(i.ЮЛ.АдресПолн)
 
@@ -112,7 +133,7 @@ class App extends Component {
   verificatePartner = () => {
 
     this.service
-      .verificationPartner(this.state.list.INN)
+      .verificationPartner(this.state.company.ЮЛ.ИНН)
 
       .then((res) => {
 
@@ -125,7 +146,7 @@ class App extends Component {
 
   onGetStatement = () => {
     this.service
-      .getStatement(this.state.list.INN)
+      .getStatement(this.state.company.ЮЛ.ИНН)
       .then((res) => {
         window.open(res);
       })
@@ -133,7 +154,7 @@ class App extends Component {
 
   onGetInformation = () => {
     this.service
-      .getFullInformation(this.state.list.INN)
+      .getFullInformation(this.state.company.ЮЛ.ИНН)
       .then((res) => {
 
         this.setState({
@@ -142,10 +163,27 @@ class App extends Component {
       })
   }
 
+  getCompany = (company) => {
+
+    if (company === this.state.company) {
+      return
+    }
+    this.setState({
+      loading: true,
+      company: company
+    })
+  }
+
+  setLoadingFalse = () => {
+    this.setState({
+      loading: false
+    })
+  }
+
 
   render() {
 
-    const { list, loading, Positive, Negative, historyList, fullInformation } = this.state;
+    const { list, error, loading, Positive, Negative, historyList, fullInformation, company } = this.state;
 
     return (
       <div className="main">
@@ -157,30 +195,75 @@ class App extends Component {
               padding: 10
             }}>
 
-              <SearchBlock onSearchCompany={this.searchCompany} />
+              <SearchBlock onSearchCompany={this.searchCompany}
+                error={error} />
+
               <MapBlock list={list}
                 onGetCoordinates={this.getCoordinates}
                 loading={loading}
                 verificatePartner={this.verificatePartner}
                 getStatement={this.onGetStatement}
-                getInformation={this.onGetInformation} />
+                getInformation={this.onGetInformation}
+                company={company}
+                setLoadingFalse={this.setLoadingFalse} />
 
+              {company &&
+                <div style={{ marginTop: 20 }}>
+
+                  <Button style={{ width: 200 }}
+                    type='primary'
+                    onClick={this.verificatePartner}>
+
+                    <NavLink to='/check'>
+                      Проверить контрагента
+                    </NavLink>
+
+                  </Button>
+
+                  <Button style={{
+                    width: 200,
+                    marginLeft: 15
+                  }}
+                    type='primary'
+                    onClick={this.onGetInformation}>
+
+                    <NavLink to='/full_information'>
+                      Полная информация
+                    </NavLink>
+
+                  </Button>
+
+                  <Button style={{
+                    width: 200,
+                    marginLeft: 15
+                  }}
+                    type='primary'
+                    onClick={this.onGetStatement}
+                    icon={<DownloadOutlined />} size='large' >
+
+                    Получить выписку
+                  </Button>
+
+                </div>
+              }
             </div>
 
+
+            <Route path='/company_list' render={() =>
+
+              <CompanyList list={list}
+                onGetCompany={this.getCompany}
+                loading={loading} />}
+            />
             <Route path='/check' render={() =>
 
-              <CompanyDescription status={list.Status}
+              <CompanyDescription status={company.ЮЛ.Статус}
                 positive={Positive}
                 negative={Negative} />}
             />
             <Route path='/full_information' render={() =>
 
               <FullDescription information={fullInformation} />}
-            />
-
-            <Route path='/company_list' render={() =>
-
-              <CompanyList list={list} />}
             />
 
             <QueryHistory onSearchCompany={this.searchCompany}

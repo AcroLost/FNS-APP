@@ -1,0 +1,20 @@
+.search {
+  form {
+    div {
+      padding: 0;
+    }
+  }
+  &_error {
+    font-size: 16px;
+    color: red;
+    border: 1px solid red;
+  }
+  input {
+    width: 400px;
+    height: 40px;
+  }
+  button {
+    height: 40px;
+    width: 100px;
+  }
+}

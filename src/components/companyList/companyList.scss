@@ -6,4 +6,24 @@
   padding: 10px;
   overflow-y: scroll;
   height: 660px;
+
+  .company {
+    
+    &_active {
+      background-color: #F3E6E6;
+    }
+
+    .active {
+      background-color: #74A8DA;
+    }
+
+    .unActive {
+      background-color: rgb(230, 118, 137);
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: #F3E6E6;
+    }
+  }
 }

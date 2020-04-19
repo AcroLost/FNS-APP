@@ -2,11 +2,11 @@ import React from 'react';
 
 import './companyList.scss';
 import { Spin } from 'antd';
+import { NavLink } from 'react-router-dom';
 
-const CompanyList = ({ list }) => {
+const CompanyList = ({ list, onGetCompany, loading }) => {
 
-
-  if (!list) {
+  if (!list || loading) {
     return <Spin size="large" />
   }
 
@@ -18,10 +18,28 @@ const CompanyList = ({ list }) => {
         {
           list.map((item) => {
 
-            return <div key={item}>
-              <b>{item.ЮЛ.НаимПолнЮЛ}</b>
+            return <div key={item.ЮЛ.ИНН}
+              onClick={() => onGetCompany(item)}
+              className='company'>
+
+              <NavLink to={`/company_list/${item.ЮЛ.НаимСокрЮЛ}`}
+                activeClassName='company_active' >
+
+                {item.ЮЛ.НаимПолнЮЛ}
+
+              </NavLink>
+              <p>
+                Статус:
+              <span className={
+                  item.ЮЛ.Статус === "Действующее" ? 'active' : 'unActive'
+                }>
+
+                  {item.ЮЛ.Статус}
+                </span>
+              </p>
               <hr />
-            </div>;
+
+            </div>
           })
         }
       </div>

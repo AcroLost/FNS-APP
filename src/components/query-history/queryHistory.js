@@ -12,13 +12,8 @@ const QueryHistory = ({ historyList, onSearchCompany }) => {
     const items = historyList.map((item) => {
 
         return (
-            <div className='history__item' style={{
-                textAlign: 'center'
-            }}>
-                <span style={{
-                    cursor: 'pointer'
-                }}
-                    onClick={() => onSearchCompany(item.name)}>
+            <div className='history__item'>
+                <span onClick={() => onSearchCompany(item.name)}>
                     {item.name}
                 </span>
                 <hr />

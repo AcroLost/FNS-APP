@@ -2,39 +2,16 @@ import * as axios from "axios";
 
 export default class Service {
 
-  _apiKey = '&key=e90167fd48d027677cfa47dd6181140243c355ad';
+  _apiKey = '&key=c607048c10cc690371ed59eb73d962ad6fedacfb';
   _apiFNS = 'https://api-fns.ru/api/search?q=';
   // _corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 
-  getResource = async (query) => {
-
-    const res = await axios.get(`${this._apiFNS}${query}${this._apiKey}`);
-
-
-    return res.data.items[0].ЮЛ;
-    // return res;
-  }
-
-
   getCompany = async (query) => {
+
     const res = await axios.get(`${this._apiFNS}${query}${this._apiKey}`);
     console.log(res.data.items);
 
     return res.data.items;
-    // return this._transformCompany(res.data.items[0].ЮЛ);
-  }
-
-  _transformCompany = (company) => {
-
-    return {
-      // id: this._extractId(person),
-      INN: company.ИНН,
-      OGRN: company.ОГРН,
-      FullName: company.НаимСокрЮЛ,
-      Address: company.АдресПолн,
-      Status: company.Статус,
-      Activity: company.ОснВидДеят
-    }
   }
 
   verificationPartner = async (INN) => {
@@ -71,15 +48,12 @@ export default class Service {
 
     const res = await axios.get(`${this._apiYandex}${query}`);
 
-    // return res.data.items[0].ЮЛ;
-    console.log(res.data.response.GeoObjectCollection.featureMember[0].GeoObject.Point);
     return res.data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos;
 
   }
 
   getCoord = async (address) => {
     const res = await this.getСoordinates(address)
-    console.log(res)
     return res;
   }
 

@@ -1,6 +1,8 @@
 .history__item {
+  text-align: center;
 
   &:hover {
+    cursor: pointer;
     background-color: rgb(226, 221, 221);
   }
 }

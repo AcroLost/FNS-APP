@@ -6,7 +6,6 @@ import { Spin } from 'antd';
 
 const CompanyDescription = ({ positive, negative, status }) => {
 
-
   if (!positive || !negative) {
     return <Spin size="large" />
   }
@@ -19,27 +18,29 @@ const CompanyDescription = ({ positive, negative, status }) => {
 
       <div>
         <b style={{ fontSize: 17 }}>Позитивные факторы:</b>
-        {positive &&
-          Object.keys(positive).map((item) => {
+        {Object.keys(positive).length > 0
+          ? Object.keys(positive).map((item) => {
 
             return <p style={{ marginLeft: 15 }}>
               <b>{item}:</b> {positive[item]}
             </p>
 
           })
+          : <p>Позитивные факторы отсутствуют</p>
         }
       </div>
       <hr />
       <div style={{ marginTop: 20 }}>
 
         <b style={{ fontSize: 17 }}>Негативные факторы:</b>
-        {negative &&
-          Object.keys(negative).map((item) => {
+        {Object.keys(negative).length > 0
+          ? Object.keys(negative).map((item) => {
 
             return <p style={{ marginLeft: 15 }}>
               <b>{item}:</b> {negative[item]}
             </p>;
           })
+          : <p>Негативные факторы отсутствуют</p>
         }
       </div>
       <hr />

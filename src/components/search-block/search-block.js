@@ -1,62 +1,56 @@
-import React, { Component } from 'react';
-import { Form, Input, Button, Spin } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, Spin, Alert } from 'antd';
 
 import { SearchOutlined } from '@ant-design/icons'
-import './search-block.css';
+import './search-block.scss';
 
-export default class SearchBlock extends Component {
+const SearchBlock = ({ loading, onSearchCompany, error }) => {
 
-    state = {
-        inputValue: ''
-    }
+  const [input, setInput] = useState('');
 
-    inputChange = (event) => {
-        this.setState({
-            inputValue: event.target.value
-        })
-    }
+  const inputChange = (event) => {
+    setInput(event.target.value)
+  }
 
-    submit = (event) => {
-        event.preventDefault();
+  const submit = (event) => {
+    event.preventDefault();
 
-        if (!this.state.inputValue) {
-            alert('Поле не может быть пустым');
-            return;
+    onSearchCompany(input);
+    setInput('');
+
+  }
+
+  if (loading) {
+    return <Spin size="large" />
+  }
+
+  return (
+    <div className="search">
+
+      <Form>
+        <Input placeholder="Например: 'угату'"
+          value={input}
+          onChange={inputChange} />
+
+        <Button type="primary"
+          htmlType="submit"
+          icon={<SearchOutlined />}
+          onClick={submit}>
+
+          Поиск
+        </Button>
+
+        {error &&
+          <Alert style={{ width: 400, margin: '5px auto 0' }}
+            message="Ошибка"
+            description="Поле не может быть пустым."
+            type="error"
+            showIcon
+          />
         }
-
-        this.props.onSearchCompany(this.state.inputValue);
-
-        this.setState({
-            inputValue: ''
-        });
-
-    }
-
-    render() {
-
-        const { loading } = this.props;
-
-        if (loading) {
-
-            return <Spin size="large" />
-        }
-
-        return (
-            <div className="search">
-                <Form>
-                    <Input placeholder="Введите Ваш запрос"
-                        value={this.state.inputValue}
-                        onChange={this.inputChange} />
-
-                    <Button type="primary"
-                        htmlType="submit"
-                        icon={<SearchOutlined />}
-                        onClick={this.submit}>
-
-                        Поиск
-                </Button>
-                </Form>
-            </div>
-        );
-    }
+      </Form>
+    </div>
+  );
 }
+
+export default SearchBlock;
