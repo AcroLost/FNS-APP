@@ -43,12 +43,12 @@ const MapBlock = ({ list, loading, company, setLoadingFalse }) => {
             ? <Placemark defaultGeometry={[company.point[1], company.point[0]]}
               properties={{
                 balloonContentBody:
-                  `<b>Наименование организации:</b> ${company.ЮЛ.НаимПолнЮЛ}<br>
-              <b>ИНН:</b> ${company.ЮЛ.ИНН}<br>
-              <b>ОГРН:</b> ${company.ЮЛ.ОГРН}<br>
-              <b>Адрес:</b> ${company.ЮЛ.АдресПолн}<br>
-              <b>Статус:</b> ${company.ЮЛ.Статус}<br>
-              <b>Вид деятельности:</b> ${company.ЮЛ.ОснВидДеят}`
+                  `<b>Наименование:</b> ${company.НаимПолнЮЛ || company.ФИОПолн} <hr>
+              <b>ИНН:</b> ${company.ИНН}<hr>
+              <b>ОГРН:</b> ${company.ОГРН}<hr>
+              <b>Адрес:</b> ${company.АдресПолн}<hr>
+              <b>Статус:</b> ${company.Статус}<hr>
+              <b>Вид деятельности:</b> ${company.ОснВидДеят}`
               }} />
             : list
               ? list.map((i) => {
@@ -56,12 +56,12 @@ const MapBlock = ({ list, loading, company, setLoadingFalse }) => {
                 return <Placemark defaultGeometry={[i.point[1], i.point[0]]}
                   properties={{
                     balloonContentBody:
-                      `<b>Наименование организации:</b> ${i.ЮЛ.НаимПолнЮЛ}<br>
-                    <b>ИНН:</b> ${i.ЮЛ.ИНН}<br>
-                    <b>ОГРН:</b> ${i.ЮЛ.ОГРН}<br>
-                    <b>Адрес:</b> ${i.ЮЛ.АдресПолн}<br>
-                    <b>Статус:</b> ${i.ЮЛ.Статус}<br>
-                    <b>Вид деятельности:</b> ${i.ЮЛ.ОснВидДеят}`
+                      `<b>Наименование:</b> ${i.НаимПолнЮЛ || i.ФИОПолн}<hr>
+                    <b>ИНН:</b> ${i.ИНН}<hr>
+                    <b>ОГРН:</b> ${i.ОГРН}<hr>
+                    <b>Адрес:</b> ${i.АдресПолн}<hr>
+                    <b>Статус:</b> ${i.Статус}<hr>
+                    <b>Вид деятельности:</b> ${i.ОснВидДеят}`
                   }} />
               })
               : null

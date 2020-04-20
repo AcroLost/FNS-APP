@@ -18,23 +18,23 @@ const CompanyList = ({ list, onGetCompany, loading }) => {
         {
           list.map((item) => {
 
-            return <div key={item.ЮЛ.ИНН}
+            return <div key={item.ИНН}
               onClick={() => onGetCompany(item)}
               className='company'>
 
-              <NavLink to={`/company_list/${item.ЮЛ.НаимСокрЮЛ}`}
+              <NavLink to={`/company_list/${item.НаимСокрЮЛ}`}
                 activeClassName='company_active' >
 
-                {item.ЮЛ.НаимПолнЮЛ}
+                {item.НаимПолнЮЛ || item.ФИОПолн}
 
               </NavLink>
               <p>
                 Статус:
               <span className={
-                  item.ЮЛ.Статус === "Действующее" ? 'active' : 'unActive'
+                  item.Статус === "Действующее" ? 'active' : 'unActive'
                 }>
 
-                  {item.ЮЛ.Статус}
+                  {item.Статус}
                 </span>
               </p>
               <hr />

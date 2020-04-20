@@ -101,20 +101,33 @@ class App extends Component {
 
         list.map((item) => {
 
-          if (item.ЮЛ.ГдеНайдено === 'ИНН') {
-            this.getCoordinates([item]);
+          if (item.hasOwnProperty('ЮЛ')) {
+
+            if (item.ЮЛ.ГдеНайдено === 'ИНН') {
+
+              return this.getCoordinates([item.ЮЛ]);
+
+            } else if (item.ЮЛ.ГдеНайдено === 'ОГРН') {
+              return this.getCoordinates([item.ЮЛ]);
+
+            } else if (item.ЮЛ.ГдеНайдено === 'Наименование ЮЛ' || item.ЮЛ.ГдеНайдено === 'Наименование ЮЛ полное' || item.ЮЛ.ГдеНайдено === 'ФИО учредителя (Гареев Руслан Кимович, ИННФЛ: 860602995240)') {
+              return this.getCoordinates([item.ЮЛ]);
+            }
+
+          } else if (item.hasOwnProperty('ИП')) {
+
+            return this.getCoordinates([item.ИП]);
           }
         })
-
       });
   }
 
   getCoordinates(list) {
 
     list.map((i) => {
-      debugger;
+
       this.service
-        .getCoord(i.ЮЛ.АдресПолн)
+        .getCoord(i.АдресПолн)
 
         .then((res) => {
           this.setState({
@@ -133,7 +146,7 @@ class App extends Component {
   verificatePartner = () => {
 
     this.service
-      .verificationPartner(this.state.company.ЮЛ.ИНН)
+      .verificationPartner(this.state.company.ИНН)
 
       .then((res) => {
 
@@ -146,7 +159,7 @@ class App extends Component {
 
   onGetStatement = () => {
     this.service
-      .getStatement(this.state.company.ЮЛ.ИНН)
+      .getStatement(this.state.company.ИНН)
       .then((res) => {
         window.open(res);
       })
@@ -154,7 +167,7 @@ class App extends Component {
 
   onGetInformation = () => {
     this.service
-      .getFullInformation(this.state.company.ЮЛ.ИНН)
+      .getFullInformation(this.state.company.ИНН)
       .then((res) => {
 
         this.setState({
@@ -257,7 +270,7 @@ class App extends Component {
             />
             <Route path='/check' render={() =>
 
-              <CompanyDescription status={company.ЮЛ.Статус}
+              <CompanyDescription status={company.Статус}
                 positive={Positive}
                 negative={Negative} />}
             />
