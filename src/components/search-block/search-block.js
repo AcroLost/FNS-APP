@@ -4,6 +4,8 @@ import { Form, Input, Button, Spin, Alert } from 'antd';
 import { SearchOutlined } from '@ant-design/icons'
 import './search-block.scss';
 
+import { UnorderedListOutlined } from '@ant-design/icons';
+
 const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckbox }) => {
 
   const [input, setInput] = useState('');
@@ -73,7 +75,7 @@ const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckb
             showIcon
           />
         }
-        <Button style={{ marginLeft: 5 }} onClick={() => setDisplay('block')} type="default">Выбрать регионы</Button>
+        <Button icon={<UnorderedListOutlined />} style={{ marginLeft: 5 }} onClick={() => setDisplay('block')} type="default">Выбрать регионы</Button>
       </Form>
 
 

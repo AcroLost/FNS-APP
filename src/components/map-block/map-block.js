@@ -34,7 +34,7 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
           'Map,Placemark,control.ZoomControl,control.FullscreenControl,geoObject.addon.balloon',
       }}>
 
-        <Map style={{ width: 650, height: 500 }}
+        <Map style={{ width: 665, height: 530 }}
           defaultState={{
             center: center,
             zoom: zoom,
@@ -76,9 +76,9 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
       </YMaps >
 
       {company &&
-        <div style={{ marginTop: 20 }}>
+        <div style={{ marginTop: 10 }}>
 
-          <Button style={{ width: 200 }}
+          <Button style={{ width: 200, height: 40 }}
             type='primary'
             onClick={verificatePartner}>
 
@@ -90,7 +90,8 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
 
           <Button style={{
             width: 200,
-            marginLeft: 15
+            marginLeft: 15,
+            height: 40
           }}
             type='primary'
             onClick={getInformation}>
