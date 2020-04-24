@@ -3,8 +3,13 @@ import React from 'react';
 import './companyList.scss';
 import { Spin } from 'antd';
 import { NavLink } from 'react-router-dom';
+import { useEffect } from 'react';
 
-const CompanyList = ({ list, onGetCompany, loading }) => {
+const CompanyList = ({ companyNull, list, onGetCompany, loading }) => {
+
+  useEffect(() => {
+    companyNull();
+  }, []);
 
   if (!list || loading) {
     return <Spin size="large" />
@@ -13,8 +18,8 @@ const CompanyList = ({ list, onGetCompany, loading }) => {
   return (
 
     <div className="companyList">
-
-      <div>
+      <h3>Найдено организаций: {list.length}</h3>
+      <div style={{ overflowY: 'scroll', height: 610 }}>
         {
           list.map((item) => {
 

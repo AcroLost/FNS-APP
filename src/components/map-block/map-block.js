@@ -2,10 +2,12 @@ import React from 'react';
 import { YMaps, Map, Placemark, GeolocationControl } from 'react-yandex-maps';
 
 import './map-block.scss';
-import { Spin } from 'antd';
+import { Spin, Button } from 'antd';
 import { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import { DownloadOutlined } from '@ant-design/icons';
 
-const MapBlock = ({ list, loading, company, setLoadingFalse }) => {
+const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loading, company, setLoadingFalse }) => {
 
   const [zoom, setZoom] = useState(11);
   const [center, setCenter] = useState([54.75, 56.00]);
@@ -72,6 +74,46 @@ const MapBlock = ({ list, loading, company, setLoadingFalse }) => {
         </Map>
 
       </YMaps >
+
+      {company &&
+        <div style={{ marginTop: 20 }}>
+
+          <Button style={{ width: 200 }}
+            type='primary'
+            onClick={verificatePartner}>
+
+            <NavLink to={`/company_list/${company.НаимСокрЮЛ}/check`}>
+              Проверить контрагента
+                    </NavLink>
+
+          </Button>
+
+          <Button style={{
+            width: 200,
+            marginLeft: 15
+          }}
+            type='primary'
+            onClick={getInformation}>
+
+            <NavLink to={`/company_list/${company.НаимСокрЮЛ}/full_information`}>
+              Полная информация
+                    </NavLink>
+
+          </Button>
+
+          <Button style={{
+            width: 200,
+            marginLeft: 15
+          }}
+            type='primary'
+            onClick={getStatement}
+            icon={<DownloadOutlined />} size='large' >
+
+            Получить выписку
+                  </Button>
+
+        </div>
+      }
 
 
     </div>

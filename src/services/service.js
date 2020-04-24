@@ -2,15 +2,15 @@ import * as axios from "axios";
 
 export default class Service {
 
-  _apiKey = '&key=1b75eebcf8f54699935d9cc3e07d46c674e9b271';
+  _apiKey = '&key=54c7c6f39d4c9f1b83b2613a8bea70de50b8ac5b';
   _apiFNS = 'https://api-fns.ru/api/search?q=';
   // _corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 
   getCompany = async (query) => {
 
+
     const res = await axios.get(`${this._apiFNS}${query}${this._apiKey}`);
 
-    console.log(res.data.items);
     return res.data.items;
   }
 
@@ -47,7 +47,6 @@ export default class Service {
   getСoordinates = async (query) => {
 
     const res = await axios.get(`${this._apiYandex}${query}`);
-
     return res.data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos;
 
   }

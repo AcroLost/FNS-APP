@@ -13,10 +13,8 @@ import Header from './components/header/header';
 import QueryHistory from './components/query-history/queryHistory';
 import CompanyDescription from './components/company-description/CompanyDescription';
 import FullDescription from './components/fullDescription/fullDescription';
-import { Route, withRouter, NavLink } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import CompanyList from './components/companyList/companyList';
-import { Button } from 'antd';
-import { DownloadOutlined } from '@ant-design/icons';
 
 class App extends Component {
 
@@ -34,7 +32,15 @@ class App extends Component {
 
     historyList: [],
 
-    fullInformation: null
+    fullInformation: null,
+
+    regions: null
+  }
+
+  companyNull = () => {
+    this.setState({
+      company: null
+    })
   }
 
   componentDidMount() {
@@ -110,7 +116,7 @@ class App extends Component {
             } else if (item.ЮЛ.ГдеНайдено === 'ОГРН') {
               return this.getCoordinates([item.ЮЛ]);
 
-            } else if (item.ЮЛ.ГдеНайдено === 'Наименование ЮЛ' || item.ЮЛ.ГдеНайдено === 'Наименование ЮЛ полное' || item.ЮЛ.ГдеНайдено === 'ФИО учредителя (Гареев Руслан Кимович, ИННФЛ: 860602995240)') {
+            } else if (item.ЮЛ.ГдеНайдено.indexOf('Наименование ЮЛ' || 'ФИО') > -1) {
               return this.getCoordinates([item.ЮЛ]);
             }
 
@@ -126,6 +132,25 @@ class App extends Component {
 
     list.map((i) => {
 
+      if (this.state.regions) {
+
+        this.state.regions.map((item) => {
+
+          if (i.АдресПолн.indexOf(item) > -1) {
+            this.service
+              .getCoord(i.АдресПолн)
+              .then((res) => {
+
+                this.setState({
+
+                  list: [...this.state.list, { ...i, point: res.split(' ') }],
+                })
+              })
+          }
+        })
+        return
+      }
+
       this.service
         .getCoord(i.АдресПолн)
 
@@ -135,7 +160,6 @@ class App extends Component {
             list: [...this.state.list, { ...i, point: res.split(' ') }],
           })
         })
-
     });
 
     this.setState({
@@ -193,6 +217,21 @@ class App extends Component {
     })
   }
 
+  getRegion = (regions) => {
+    this.setState({
+      regions: regions
+    })
+  }
+
+  clearCheckbox = () => {
+
+    this.setState({
+      region: null
+    })
+
+    document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
+  }
+
 
   render() {
 
@@ -209,7 +248,9 @@ class App extends Component {
             }}>
 
               <SearchBlock onSearchCompany={this.searchCompany}
-                error={error} />
+                error={error}
+                onClearCheckbox={this.clearCheckbox}
+                getRegion={this.getRegion} />
 
               <MapBlock list={list}
                 onGetCoordinates={this.getCoordinates}
@@ -220,61 +261,24 @@ class App extends Component {
                 company={company}
                 setLoadingFalse={this.setLoadingFalse} />
 
-              {company &&
-                <div style={{ marginTop: 20 }}>
 
-                  <Button style={{ width: 200 }}
-                    type='primary'
-                    onClick={this.verificatePartner}>
-
-                    <NavLink to='/check'>
-                      Проверить контрагента
-                    </NavLink>
-
-                  </Button>
-
-                  <Button style={{
-                    width: 200,
-                    marginLeft: 15
-                  }}
-                    type='primary'
-                    onClick={this.onGetInformation}>
-
-                    <NavLink to='/full_information'>
-                      Полная информация
-                    </NavLink>
-
-                  </Button>
-
-                  <Button style={{
-                    width: 200,
-                    marginLeft: 15
-                  }}
-                    type='primary'
-                    onClick={this.onGetStatement}
-                    icon={<DownloadOutlined />} size='large' >
-
-                    Получить выписку
-                  </Button>
-
-                </div>
-              }
             </div>
 
 
-            <Route path='/company_list' render={() =>
+            <Route exact path='/company_list' render={() =>
 
-              <CompanyList list={list}
+              <CompanyList companyNull={this.companyNull}
+                list={list}
                 onGetCompany={this.getCompany}
                 loading={loading} />}
             />
-            <Route path='/check' render={() =>
+            <Route path={`/company_list/:company/check`} render={() =>
 
               <CompanyDescription status={company.Статус}
                 positive={Positive}
                 negative={Negative} />}
             />
-            <Route path='/full_information' render={() =>
+            <Route path='/company_list/:company/full_information' render={() =>
 
               <FullDescription information={fullInformation} />}
             />
@@ -282,13 +286,8 @@ class App extends Component {
             <QueryHistory onSearchCompany={this.searchCompany}
               historyList={historyList} />
 
-
           </div>
-
-          {/* <SliderShow /> */}
-
         </div>
-
       </div>
     );
   }
