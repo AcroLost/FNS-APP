@@ -1,59 +1,51 @@
 import * as axios from "axios";
 
-export default class Service {
-
-  _apiKey = '&key=54c7c6f39d4c9f1b83b2613a8bea70de50b8ac5b';
+const _apiKey = '&key=f55560b1f7ef7434ed199a6d40fc43b37999c68b',
   _apiFNS = 'https://api-fns.ru/api/search?q=';
-  // _corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
+// _corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 
-  getCompany = async (query) => {
+export const apiFNS = {
 
+  async getCompany(query) {
 
-    const res = await axios.get(`${this._apiFNS}${query}${this._apiKey}`);
-
+    const res = await axios.get(`${_apiFNS}${query}${_apiKey}`);
     return res.data.items;
-  }
+  },
 
-  verificationPartner = async (INN) => {
+  async verificationPartner(INN) {
 
-    const query = await axios.get(`https://api-fns.ru/api/check?req=${INN}${this._apiKey}`);
+    const query = await axios.get(`https://api-fns.ru/api/check?req=${INN}${_apiKey}`);
+    return _transformVerification(query.data.items[0].ЮЛ || query.data.items[0].ИП);
+  },
 
-    return this._transformVerification(query.data.items[0].ЮЛ || query.data.items[0].ИП);
-  }
+  async getStatement(INN) {
 
-  _transformVerification = (partner) => {
+    return `https://api-fns.ru/api/vyp?req=${INN}${_apiKey}`;
+  },
 
-    return {
-      Positive: partner.Позитив,
-      Negative: partner.Негатив
-    }
-  }
+  async getFullInformation(INN) {
 
-  getStatement = async (INN) => {
-    return `https://api-fns.ru/api/vyp?req=${INN}${this._apiKey}`;
-  }
-
-  getFullInformation = async (INN) => {
-
-    const query = await axios.get(`https://api-fns.ru/api/egr?req=${INN}&key=${this._apiKey}`);
-
+    const query = await axios.get(`https://api-fns.ru/api/egr?req=${INN}&key=${_apiKey}`);
     return query.data.items[0].ЮЛ || query.data.items[0].ИП;
   }
+}
 
-  _apiKeyYandex = 'fbe27a07-f3ff-4ee7-b8a6-801e7e021216';
+const _transformVerification = (partner) => {
 
-  _apiYandex = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${this._apiKeyYandex}&geocode=`;
+  return {
+    Positive: partner.Позитив,
+    Negative: partner.Негатив
+  }
+}
 
-  getСoordinates = async (query) => {
+const _apiKeyYandex = 'fbe27a07-f3ff-4ee7-b8a6-801e7e021216',
+  _apiYandex = `https://geocode-maps.yandex.ru/1.x/?format=json&apikey=${_apiKeyYandex}&geocode=`;
 
-    const res = await axios.get(`${this._apiYandex}${query}`);
+export const apiYandex = {
+
+  async getСoordinates(query) {
+
+    const res = await axios.get(`${_apiYandex}${query}`);
     return res.data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos;
-
   }
-
-  getCoord = async (address) => {
-    const res = await this.getСoordinates(address)
-    return res;
-  }
-
 }

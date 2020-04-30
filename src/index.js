@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import AppContainer from './App';
+import AppContainerWithRouter from './AppContainer';
 
 ReactDOM.render(
     <BrowserRouter>
-        <AppContainer />
+        <AppContainerWithRouter />
     </BrowserRouter>,
     document.getElementById('root'));

@@ -2,16 +2,20 @@ import React from 'react';
 
 import './companyList.scss';
 import { Spin } from 'antd';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { useEffect } from 'react';
 
-const CompanyList = ({ companyNull, list, onGetCompany, loading }) => {
+const CompanyList = ({ history, companyNull, list, onGetCompany, loading }) => {
 
   useEffect(() => {
     companyNull();
+
+    if (!loading) {
+      history.push("/home");
+    }
   }, []);
 
-  if (!list || loading) {
+  if (!list.length || loading) {
     return <Spin size="large" />
   }
 
@@ -27,7 +31,7 @@ const CompanyList = ({ companyNull, list, onGetCompany, loading }) => {
               onClick={() => onGetCompany(item)}
               className='company'>
 
-              <NavLink to={`/company_list/${item.НаимСокрЮЛ}`}
+              <NavLink to={`/home/company_list/${item.НаимСокрЮЛ}`}
                 activeClassName='company_active' >
 
                 {item.НаимПолнЮЛ || item.ФИОПолн}
@@ -53,4 +57,6 @@ const CompanyList = ({ companyNull, list, onGetCompany, loading }) => {
   );
 }
 
-export default CompanyList;
+const CompanyListContainer = withRouter(CompanyList)
+
+export default CompanyListContainer;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Spin, Alert } from 'antd';
+import { Form, Input, Button, Spin, Alert, Modal } from 'antd';
 
 import { SearchOutlined } from '@ant-design/icons'
 import './search-block.scss';
@@ -8,12 +8,17 @@ import { UnorderedListOutlined } from '@ant-design/icons';
 
 const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckbox }) => {
 
-  const [input, setInput] = useState('');
-  const [display, setDisplay] = useState('none');
-  const [checkboxList, setCheckboxList] = useState([]);
+  const [input, setInput] = useState(''),
+    [inputFilter, setFilterInput] = useState(''),
+    [display, setDisplay] = useState(false),
+    [checkboxList, setCheckboxList] = useState([]);
 
   const inputChange = (event) => {
     setInput(event.target.value)
+  }
+
+  const inputFilterChange = (event) => {
+    setFilterInput(event.target.value)
   }
 
   const submit = (event) => {
@@ -48,7 +53,7 @@ const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckb
   const submitRegion = (event) => {
     event.preventDefault();
     getRegion(checkboxList)
-    setDisplay('none');
+    setDisplay(false);
   }
 
   return (
@@ -75,30 +80,50 @@ const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckb
             showIcon
           />
         }
-        <Button icon={<UnorderedListOutlined />} style={{ marginLeft: 5 }} onClick={() => setDisplay('block')} type="default">Выбрать регионы</Button>
+        <Button icon={<UnorderedListOutlined />} style={{ marginLeft: 5 }} onClick={() => setDisplay(true)} type="default">Выбрать регионы</Button>
       </Form>
 
 
-      <div className="search__region"
-        style={{ display: display }}>
-
-        <h3>Выбрать регионы</h3>
-        <Form>
-          <ul>
-            {regionsList}
-          </ul>
-
-          <Button onClick={onClearCheckbox} style={{ marginLeft: 10 }} type='primary'>Сбросить</Button>
+      <Modal className="search__region"
+        visible={display}
+        onOk={submitRegion}
+        onCancel={() => setDisplay(false)}
+        footer={[
+          <Button onClick={onClearCheckbox} style={{ marginLeft: 10 }} type='primary'>Сбросить</Button>,
 
           <Button onClick={submitRegion}
             htmlType="submit"
             style={{ marginLeft: 180 }}
             type='primary'>Ок
+          </Button>,
+
+          <Button onClick={() => setDisplay(false)} style={{ marginLeft: 5 }} type="default">Отмена</Button>
+        ]} >
+
+        <h3>Выбрать регионы</h3>
+        <Form>
+
+          <Input style={{
+            width: '100%', margin: '0 auto 5px', textAlign: 'center'
+          }}
+            placeholder="Введите регион"
+            onChange={inputFilterChange}
+            value={inputFilter} />
+
+          <ul>
+            {regionsList}
+          </ul>
+
+
+          {/* <Button onClick={submitRegion}
+            htmlType="submit"
+            style={{ marginLeft: 180 }}
+            type='primary'>Ок
           </Button>
 
-          <Button onClick={() => setDisplay('none')} style={{ marginLeft: 5 }} type="default">Отмена</Button>
+          <Button onClick={() => setDisplay('none')} style={{ marginLeft: 5 }} type="default">Отмена</Button> */}
         </Form>
-      </div>
+      </Modal>
     </div>
   );
 }

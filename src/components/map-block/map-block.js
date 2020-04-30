@@ -9,8 +9,8 @@ import { DownloadOutlined } from '@ant-design/icons';
 
 const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loading, company, setLoadingFalse }) => {
 
-  const [zoom, setZoom] = useState(11);
-  const [center, setCenter] = useState([54.75, 56.00]);
+  const [zoom, setZoom] = useState(11),
+    [center, setCenter] = useState([54.75, 56.00]);
 
   useEffect(() => {
     if (company) {
@@ -82,7 +82,7 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
             type='primary'
             onClick={verificatePartner}>
 
-            <NavLink to={`/company_list/${company.НаимСокрЮЛ}/check`}>
+            <NavLink to={`/home/company_list/${company.НаимСокрЮЛ}/check`}>
               Проверить контрагента
                     </NavLink>
 
@@ -96,7 +96,7 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
             type='primary'
             onClick={getInformation}>
 
-            <NavLink to={`/company_list/${company.НаимСокрЮЛ}/full_information`}>
+            <NavLink to={`/home/company_list/${company.НаимСокрЮЛ}/full_information`}>
               Полная информация
                     </NavLink>
 
