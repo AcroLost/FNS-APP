@@ -23,9 +23,10 @@ const QueryHistory = ({ historyList, onSearchCompany }) => {
 
     return (
         <div style={{
-            marginLeft: 35,
+            marginLeft: 15,
             background: 'white',
-            padding: '10px 20px'
+            padding: '10px 20px',
+            height: 615
         }}>
 
             <p style={{

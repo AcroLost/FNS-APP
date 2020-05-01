@@ -34,7 +34,7 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
           'Map,Placemark,control.ZoomControl,control.FullscreenControl,geoObject.addon.balloon',
       }}>
 
-        <Map style={{ width: 665, height: 530 }}
+        <Map style={{ width: 665, height: 560 }}
           defaultState={{
             center: center,
             zoom: zoom,
@@ -104,11 +104,12 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
 
           <Button style={{
             width: 200,
-            marginLeft: 15
+            marginLeft: 15,
+            height: 40
           }}
             type='primary'
             onClick={getStatement}
-            icon={<DownloadOutlined />} size='large' >
+            icon={<DownloadOutlined />} size='middle' >
 
             Получить выписку
                   </Button>

@@ -20,32 +20,26 @@ const App = ({ error, searchCompany, clearCheckbox, getRegion, getCoordinates, l
 
       <HeaderContainer companyNull={companyNull} />
       <div className="search">
-        <div style={{ paddingTop: 30 }} className="search__wrapper">
-          <div style={{
-            padding: 10
-          }}>
+        <div className="search__wrapper">
 
-            <Route path='/home' render={() => {
-              return <div>
-                <SearchBlock onSearchCompany={searchCompany}
-                  error={error}
-                  onClearCheckbox={clearCheckbox}
-                  getRegion={getRegion} />
+          <Route path='/home' render={() => {
+            return <div style={{ height: 615 }}>
+              <SearchBlock onSearchCompany={searchCompany}
+                error={error}
+                onClearCheckbox={clearCheckbox}
+                getRegion={getRegion} />
 
-                <MapBlock list={list}
-                  onGetCoordinates={getCoordinates}
-                  loading={loading}
-                  verificatePartner={verificatePartner}
-                  getStatement={onGetStatement}
-                  getInformation={onGetInformation}
-                  company={company}
-                  setLoadingFalse={setLoadingFalse} />
-              </div>
-            }}
-            />
-
-          </div>
-
+              <MapBlock list={list}
+                onGetCoordinates={getCoordinates}
+                loading={loading}
+                verificatePartner={verificatePartner}
+                getStatement={onGetStatement}
+                getInformation={onGetInformation}
+                company={company}
+                setLoadingFalse={setLoadingFalse} />
+            </div>
+          }}
+          />
 
           <Switch>
 

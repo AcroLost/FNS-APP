@@ -3,14 +3,10 @@ import { VictoryPie } from 'victory';
 
 const Chart = ({ positive, negative }) => {
 
-    console.log();
     return (
         <div>
-            {/* <h3 style={{ textAlign: 'center', marginBottom: 0 }}>График</h3> */}
 
-            <VictoryPie height={320}
-                width={320}
-                innerRadius={60}
+            <VictoryPie width={330} height={330} innerRadius={60}
                 padAngle={5}
                 style={{
                     data: {

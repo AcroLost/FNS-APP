@@ -71,7 +71,7 @@ const AppContainer = ({ history }) => {
 
     apiFNS.getCompany(name)
       .then((companyList) => {
-        debugger;
+
         companyList.map((item) => {
 
           if (item.hasOwnProperty('ЮЛ')) {
@@ -132,11 +132,13 @@ const AppContainer = ({ history }) => {
 
   const verificatePartner = () => {
 
+
     apiFNS.verificationPartner(company.ИНН)
       .then((res) => {
         setPositive(res.Positive);
         setNegative(res.Negative);
-      })
+      });
+
   }
 
   const onGetStatement = () => {

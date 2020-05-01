@@ -6,54 +6,57 @@ const { Panel } = Collapse;
 
 const FullDescription = ({ information }) => {
 
-
-  if (!information) {
-    return <Spin size="large" />
-  }
-  console.log(information);
   return (
 
-    <div className="fullDescription">
+    <div style={{ width: 420 }}>
+      {!information
 
-      <div>
-        <b style={{ fontSize: 17 }}>Полная информация:</b>
-        {
-          Object.keys(information).map((item) => {
+        ? <Spin style={{ margin: '0 auto' }} size="large" />
 
-            if (Array.isArray(information[item])) {
+        : <div className="fullDescription">
 
-              information[item].map((i) => {
-                return null
+          <div>
+            <b style={{ fontSize: 17 }}>Полная информация:</b>
+            {
+              Object.keys(information).map((item) => {
+
+                if (Array.isArray(information[item])) {
+
+                  information[item].map((i) => {
+                    return null
+                  })
+                }
+
+                if (typeof information[item] === 'object') {
+
+                  return <Collapse style={{ marginLeft: 7 }}>
+                    <Panel header={item} key={item}> {Object.keys(information[item]).map((i) => {
+
+                      return (
+                        <span>
+                          <span>
+                            <b>{i}:</b> {information[item][i]}
+                          </span>
+                          <hr />
+                        </span>
+                      );
+                    })}
+                    </Panel>
+                  </Collapse>
+                }
+
+                return <p style={{ marginLeft: 7 }}>
+                  <b>{item}:</b> {information[item]}
+                  <hr />
+                </p>
               })
             }
+          </div>
 
-            if (typeof information[item] === 'object') {
-
-              return <Collapse style={{ marginLeft: 7 }}>
-                <Panel header={item} key={item}> {Object.keys(information[item]).map((i) => {
-
-                  return (
-                    <span>
-                      <span>
-                        <b>{i}:</b> {information[item][i]}
-                      </span>
-                      <hr />
-                    </span>
-                  );
-                })}
-                </Panel>
-              </Collapse>
-            }
-
-            return <p style={{ marginLeft: 7 }}>
-              <b>{item}:</b> {information[item]}
-              <hr />
-            </p>
-          })
-        }
-      </div>
-
+        </div>
+      }
     </div>
+
   );
 }
 

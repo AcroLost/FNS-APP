@@ -11,8 +11,10 @@ body {
   background-color: rgb(243,230,230);
   
   .search__wrapper {
+    height: 680px;
     display: flex;
     justify-content: center;
+    align-items: center;
     text-align: center;
   }
 }

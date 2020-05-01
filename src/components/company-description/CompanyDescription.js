@@ -7,85 +7,87 @@ const { Panel } = Collapse;
 
 const CompanyDescription = ({ positive, negative, status }) => {
 
-  if (!positive || !negative) {
-    return <Spin size="large" />
-  }
-
   const active = status === "Действующее" ? 'active' : 'unActive';
 
   return (
+    <div style={{ width: 420 }}>
+      {!positive || !negative
 
-    <div className="description">
+        ? <Spin style={{ margin: '0 auto' }} size="large" />
 
-      <div>
-        <b style={{ fontSize: 17 }}>Позитивные факторы:</b>
-        {Object.keys(positive).length > 0
+        : <div className="description">
 
-          ? Object.keys(positive).map((item) => {
+          <div>
+            <b style={{ fontSize: 17 }}>Позитивные факторы:</b>
+            {Object.keys(positive).length > 0
 
-            if (typeof positive[item] === 'object') {
+              ? Object.keys(positive).map((item) => {
 
-              return <Collapse style={{ marginLeft: 7 }}>
-                <Panel header={item} key={item}>
-                  {Object.keys(positive[item]).map((i) => {
-                    return (
-                      <span>
-                        <span>
-                          <b>{i}:</b> {positive[item][i]}
-                        </span>
-                        <hr />
-                      </span>
-                    );
-                  })}
-                </Panel>
-              </Collapse>
+                if (typeof positive[item] === 'object') {
+
+                  return <Collapse style={{ marginLeft: 7 }}>
+                    <Panel header={item} key={item}>
+                      {Object.keys(positive[item]).map((i) => {
+                        return (
+                          <span>
+                            <span>
+                              <b>{i}:</b> {positive[item][i]}
+                            </span>
+                            <hr />
+                          </span>
+                        );
+                      })}
+                    </Panel>
+                  </Collapse>
+                }
+
+                return <p style={{ marginLeft: 15 }}>
+                  <b>{item}:</b> {positive[item]}
+                </p>
+
+              })
+              : <p style={{ marginLeft: 15 }}>Позитивные факторы отсутствуют</p>
             }
+          </div>
+          <hr />
+          <div style={{ marginTop: 20 }}>
 
-            return <p style={{ marginLeft: 15 }}>
-              <b>{item}:</b> {positive[item]}
-            </p>
+            <b style={{ fontSize: 17 }}>Негативные факторы:</b>
+            {Object.keys(negative).length > 0
+              ? Object.keys(negative).map((item) => {
 
-          })
-          : <p style={{ marginLeft: 15 }}>Позитивные факторы отсутствуют</p>
-        }
-      </div>
-      <hr />
-      <div style={{ marginTop: 20 }}>
+                if (typeof negative[item] === 'object') {
 
-        <b style={{ fontSize: 17 }}>Негативные факторы:</b>
-        {Object.keys(negative).length > 0
-          ? Object.keys(negative).map((item) => {
+                  return <Collapse style={{ marginLeft: 7 }}>
+                    <Panel header={item} key={item}>
+                      {Object.keys(negative[item]).map((i) => {
+                        return (
+                          <span>
+                            <span>
+                              <b>{i}:</b> {negative[item][i]}
+                            </span>
+                            <hr />
+                          </span>
+                        );
+                      })}
+                    </Panel>
+                  </Collapse>
+                }
 
-            if (typeof negative[item] === 'object') {
-
-              return <Collapse style={{ marginLeft: 7 }}>
-                <Panel header={item} key={item}>
-                  {Object.keys(negative[item]).map((i) => {
-                    return (
-                      <span>
-                        <span>
-                          <b>{i}:</b> {negative[item][i]}
-                        </span>
-                        <hr />
-                      </span>
-                    );
-                  })}
-                </Panel>
-              </Collapse>
+                return <p style={{ marginLeft: 15 }}>
+                  <b>{item}:</b> {negative[item]}
+                </p>;
+              })
+              : <p style={{ marginLeft: 15 }}>Негативные факторы отсутствуют</p>
             }
+          </div>
+          <hr />
+          <p>Статус: <span className={active}>{status}</span></p>
 
-            return <p style={{ marginLeft: 15 }}>
-              <b>{item}:</b> {negative[item]}
-            </p>;
-          })
-          : <p style={{ marginLeft: 15 }}>Негативные факторы отсутствуют</p>
-        }
-      </div>
-      <hr />
-      <p>Статус: <span className={active}>{status}</span></p>
-
-      <Chart positive={positive}
-        negative={negative} />
+          <Chart positive={positive}
+            negative={negative} />
+        </div>
+      }
     </div>
   );
 }

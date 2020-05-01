@@ -15,43 +15,48 @@ const CompanyList = ({ history, companyNull, list, onGetCompany, loading }) => {
     }
   }, []);
 
-  if (!list.length || loading) {
-    return <Spin size="large" />
-  }
-
   return (
+    <div style={{ width: 420 }}>
+      {loading
 
-    <div className="companyList">
-      <h3>Найдено организаций: {list.length}</h3>
-      <div style={{ overflowY: 'scroll', height: 610 }}>
-        {
-          list.map((item) => {
+        ? <Spin style={{ margin: '0 auto' }} size="large" />
 
-            return <div key={item.ИНН}
-              onClick={() => onGetCompany(item)}
-              className='company'>
+        : <div className="companyList">
 
-              <NavLink to={`/home/company_list/${item.НаимСокрЮЛ}`}
-                activeClassName='company_active' >
+          <h3>Найдено организаций: {list.length}</h3>
 
-                {item.НаимПолнЮЛ || item.ФИОПолн}
+          <div style={{ overflowY: 'scroll', height: 575 }}>
+            {
+              list.map((item) => {
 
-              </NavLink>
-              <p>
-                Статус:
-              <span className={
-                  item.Статус === "Действующее" ? 'active' : 'unActive'
-                }>
+                return <div key={item.ИНН}
+                  onClick={() => onGetCompany(item)}
+                  className='company'>
 
-                  {item.Статус}
-                </span>
-              </p>
-              <hr />
+                  <NavLink to={`/home/company_list/${item.НаимСокрЮЛ}`}
+                    activeClassName='company_active' >
 
-            </div>
-          })
-        }
-      </div>
+                    {item.НаимПолнЮЛ || item.ФИОПолн}
+
+                  </NavLink><br />
+                  <span>{item.АдресПолн}</span>
+                  <p>
+                    Статус:
+            <span className={
+                      item.Статус === "Действующее" ? 'active' : 'unActive'
+                    }>
+
+                      {item.Статус}
+                    </span>
+                  </p>
+                  <hr />
+
+                </div>
+              })
+            }
+          </div>
+        </div>
+      }
 
     </div>
   );

@@ -5,6 +5,7 @@ import { SearchOutlined } from '@ant-design/icons'
 import './search-block.scss';
 
 import { UnorderedListOutlined } from '@ant-design/icons';
+import { search } from '../../helpers/helpers';
 
 const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckbox }) => {
 
@@ -45,6 +46,8 @@ const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckb
       </li>
     );
   });
+
+  const visibleRegions = search(regionsList, inputFilter);
 
   const checkboxListChange = (region) => {
     setCheckboxList([...checkboxList, region]);
@@ -111,17 +114,9 @@ const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckb
             value={inputFilter} />
 
           <ul>
-            {regionsList}
+            {visibleRegions}
           </ul>
 
-
-          {/* <Button onClick={submitRegion}
-            htmlType="submit"
-            style={{ marginLeft: 180 }}
-            type='primary'>Ок
-          </Button>
-
-          <Button onClick={() => setDisplay('none')} style={{ marginLeft: 5 }} type="default">Отмена</Button> */}
         </Form>
       </Modal>
     </div>
