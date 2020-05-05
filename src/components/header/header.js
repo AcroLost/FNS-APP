@@ -3,23 +3,27 @@ import React from 'react';
 import './header.scss';
 import logo from '../../image/logo.png';
 import { withRouter } from 'react-router-dom';
+import { Button } from 'antd';
 
-const Header = ({ history, companyNull }) => {
+import { UnorderedListOutlined } from '@ant-design/icons';
+
+const Header = ({ history, companyNull, toggleMenu }) => {
 
     return (
         <div className="header">
 
             <div className="header__wrapper">
 
-                <img style={{ cursor: 'pointer' }} src={logo} alt="logo" onClick={() => {
+                <img className="logo" src={logo} alt="logo" onClick={() => {
                     history.push('/home');
                     companyNull();
                 }} />
 
-                <span>
+                <span className="name">
                     ФНС проверка контрагента
                 </span>
 
+                <Button onClick={toggleMenu} className="menu" type="primary" icon={<UnorderedListOutlined />} size="large"></Button>
             </div>
         </div>
     );

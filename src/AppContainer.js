@@ -17,7 +17,7 @@ const AppContainer = ({ history }) => {
     [Negative, setNegative] = useState(null),
     [historyList, setHistoryList] = useState([]),
     [fullInformation, setFullInformation] = useState(null),
-    [regions, setRegions] = useState(null);
+    [regions, setRegions] = useState([]);
 
   const companyNull = () => {
     setCompany(null)
@@ -99,7 +99,7 @@ const AppContainer = ({ history }) => {
 
     companyList.map((i) => {
 
-      if (regions) {
+      if (regions.length > 0) {
 
         regions.map((item) => {
 
@@ -107,7 +107,11 @@ const AppContainer = ({ history }) => {
 
             apiYandex.getСoordinates(i.АдресПолн)
               .then((res) => {
-                setList([...list, { ...i, point: res.split(' ') }]);
+                setList((prevList) => [
+                  ...prevList,
+                  { ...i, point: res.split(' ') }
+                ]
+                );
               })
           }
         })
@@ -117,13 +121,11 @@ const AppContainer = ({ history }) => {
       apiYandex.getСoordinates(i.АдресПолн)
         .then((res) => {
 
-          setList((prevList) => {
-
-            return [
-              ...prevList,
-              { ...i, point: res.split(' ') }
-            ]
-          })
+          setList((prevList) => [
+            ...prevList,
+            { ...i, point: res.split(' ') }
+          ]
+          )
         })
     });
 
@@ -170,17 +172,30 @@ const AppContainer = ({ history }) => {
     setLoading(false);
   }
 
-  const getRegion = (regions) => {
-    setRegions(regions);
+  const getRegion = (regionsList) => {
+    if (!regions.length) {
+      setRegions(regionsList);
+      return
+    }
+
+    regions.map((region) => {
+      debugger;
+      regionsList.map((reg) => {
+        debugger;
+        if (region !== reg) {
+          setRegions([...regions].concat(regionsList));
+        }
+      })
+    })
   }
 
   const clearCheckbox = () => {
-    setRegions(null);
+    setRegions([]);
 
     document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
   }
 
-  return <App error={error} searchCompany={searchCompany} clearCheckbox={clearCheckbox}
+  return <App regions={regions} error={error} searchCompany={searchCompany} clearCheckbox={clearCheckbox}
     getRegion={getRegion} getCoordinates={getCoordinatesCompany} list={list} loading={loading}
     verificatePartner={verificatePartner} onGetStatement={onGetStatement} onGetInformation={onGetInformation}
     company={company} setLoadingFalse={setLoadingFalse} getCompany={getCompany} Positive={Positive} Negative={Negative}

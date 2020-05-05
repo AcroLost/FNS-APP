@@ -1,6 +1,6 @@
 import * as axios from "axios";
 
-const _apiKey = '&key=f55560b1f7ef7434ed199a6d40fc43b37999c68b',
+const _apiKey = '&key=28ee5ed0c60169dc4de6a13d9ea21cf235e868c7',
   _apiFNS = 'https://api-fns.ru/api/search?q=';
 // _corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 

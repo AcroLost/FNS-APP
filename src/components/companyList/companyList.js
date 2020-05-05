@@ -16,12 +16,12 @@ const CompanyList = ({ history, companyNull, list, onGetCompany, loading }) => {
   }, []);
 
   return (
-    <div style={{ width: 420 }}>
+    <div className="information">
       {loading
 
         ? <Spin style={{ margin: '0 auto' }} size="large" />
 
-        : <div className="companyList">
+        : <div className="information__wrapper">
 
           <h3>Найдено организаций: {list.length}</h3>
 

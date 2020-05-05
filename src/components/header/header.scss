@@ -1,4 +1,6 @@
 .header {
+  display: grid;
+  grid-template-columns: 1fr;
   background-color: rgb(116, 168, 218);
   vertical-align: top;
 
@@ -7,18 +9,25 @@
     align-items: center;
     padding: 10px;
   
-    img {
+    .logo {
       width: 55px;
       height: 55px;
       margin-left: 40px;
+      cursor: pointer;
     }
 
-    span {
+    .name {
       font-size: 24px;
       font-weight: 500;
       font-family: Roboto;
     
       margin-left: 150px;
+    }
+
+    .menu {
+      position: absolute;
+      right: 17px;
+      top: 17px;
     }
   }
 }

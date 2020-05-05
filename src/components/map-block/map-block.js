@@ -21,64 +21,67 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
   }, [company]);
 
 
-  if (loading) {
-    return <Spin size="large" />
-  }
-
   return (
 
     <div className="map">
-      <YMaps query={{
-        ns: 'use-load-option',
-        load:
-          'Map,Placemark,control.ZoomControl,control.FullscreenControl,geoObject.addon.balloon',
-      }}>
 
-        <Map style={{ width: 665, height: 560 }}
-          defaultState={{
-            center: center,
-            zoom: zoom,
-            controls: ['zoomControl', 'fullscreenControl']
-          }}
-        >
-          {company
-            ? <Placemark defaultGeometry={[company.point[1], company.point[0]]}
-              properties={{
-                balloonContentBody:
-                  `<b>Наименование:</b> ${company.НаимПолнЮЛ || company.ФИОПолн} <hr>
-              <b>ИНН:</b> ${company.ИНН}<hr>
-              <b>ОГРН:</b> ${company.ОГРН}<hr>
-              <b>Адрес:</b> ${company.АдресПолн}<hr>
-              <b>Статус:</b> ${company.Статус}<hr>
-              <b>Вид деятельности:</b> ${company.ОснВидДеят}`
-              }} />
-            : list
-              ? list.map((i) => {
+      {loading
 
-                return <Placemark defaultGeometry={[i.point[1], i.point[0]]}
-                  properties={{
-                    balloonContentBody:
-                      `<b>Наименование:</b> ${i.НаимПолнЮЛ || i.ФИОПолн}<hr>
-                    <b>ИНН:</b> ${i.ИНН}<hr>
-                    <b>ОГРН:</b> ${i.ОГРН}<hr>
-                    <b>Адрес:</b> ${i.АдресПолн}<hr>
-                    <b>Статус:</b> ${i.Статус}<hr>
-                    <b>Вид деятельности:</b> ${i.ОснВидДеят}`
-                  }} />
-              })
-              : null
-          }
+        ? <Spin size="large" />
+
+        : <YMaps query={{
+          ns: 'use-load-option',
+          load:
+            'Map,Placemark,control.ZoomControl,control.FullscreenControl,geoObject.addon.balloon',
+        }}>
+
+          <Map style={{ width: '100%', height: 560 }}
+            defaultState={{
+              center: center,
+              zoom: zoom,
+              controls: ['zoomControl', 'fullscreenControl']
+            }}
+          >
+            {company
+              ? <Placemark defaultGeometry={[company.point[1], company.point[0]]}
+                properties={{
+                  balloonContentBody:
+                    `<b>Наименование:</b> ${company.НаимПолнЮЛ || company.ФИОПолн} <hr>
+                <b>ИНН:</b> ${company.ИНН}<hr>
+                <b>ОГРН:</b> ${company.ОГРН}<hr>
+                <b>Адрес:</b> ${company.АдресПолн}<hr>
+                <b>Статус:</b> ${company.Статус}<hr>
+                <b>Вид деятельности:</b> ${company.ОснВидДеят}`
+                }} />
+              : list
+                ? list.map((i) => {
+
+                  return <Placemark key={i.ИНН} defaultGeometry={[i.point[1], i.point[0]]}
+                    properties={{
+                      balloonContentBody:
+                        `<b>Наименование:</b> ${i.НаимПолнЮЛ || i.ФИОПолн}<hr>
+                      <b>ИНН:</b> ${i.ИНН}<hr>
+                      <b>ОГРН:</b> ${i.ОГРН}<hr>
+                      <b>Адрес:</b> ${i.АдресПолн}<hr>
+                      <b>Статус:</b> ${i.Статус}<hr>
+                      <b>Вид деятельности:</b> ${i.ОснВидДеят}`
+                    }} />
+                })
+                : null
+            }
 
 
-          <GeolocationControl options={{ float: 'left' }} />
-        </Map>
+            <GeolocationControl options={{ float: 'left' }} />
+          </Map>
 
-      </YMaps >
+        </YMaps >
+      }
+
 
       {company &&
-        <div style={{ marginTop: 10 }}>
+        <div className="map__buttons">
 
-          <Button style={{ width: 200, height: 40 }}
+          <Button className="map__button"
             type='primary'
             onClick={verificatePartner}>
 
@@ -88,11 +91,7 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
 
           </Button>
 
-          <Button style={{
-            width: 200,
-            marginLeft: 15,
-            height: 40
-          }}
+          <Button className="map__button button_margin"
             type='primary'
             onClick={getInformation}>
 
@@ -102,11 +101,7 @@ const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loadi
 
           </Button>
 
-          <Button style={{
-            width: 200,
-            marginLeft: 15,
-            height: 40
-          }}
+          <Button className="map__button button_margin"
             type='primary'
             onClick={getStatement}
             icon={<DownloadOutlined />} size='middle' >

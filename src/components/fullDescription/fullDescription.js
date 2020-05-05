@@ -8,49 +8,53 @@ const FullDescription = ({ information }) => {
 
   return (
 
-    <div style={{ width: 420 }}>
+    <div className="information">
       {!information
 
-        ? <Spin style={{ margin: '0 auto' }} size="large" />
+        ? <Spin style={{ margin: '100px auto' }} size="large" />
 
-        : <div className="fullDescription">
+        : <div className="information__wrapper fullDescription">
 
           <div>
             <b style={{ fontSize: 17 }}>Полная информация:</b>
-            {
-              Object.keys(information).map((item) => {
+            <div style={{ overflowY: 'scroll', height: 575 }}>
+              {
+                Object.keys(information).map((item) => {
 
-                if (Array.isArray(information[item])) {
+                  if (Array.isArray(information[item])) {
 
-                  information[item].map((i) => {
-                    return null
-                  })
-                }
+                    information[item].map((i) => {
+                      return null
+                    })
+                  }
 
-                if (typeof information[item] === 'object') {
+                  if (typeof information[item] === 'object') {
 
-                  return <Collapse style={{ marginLeft: 7 }}>
-                    <Panel header={item} key={item}> {Object.keys(information[item]).map((i) => {
+                    return <Collapse key={item} style={{ marginLeft: 7 }}>
+                      <Panel header={item} key={item}> {Object.keys(information[item]).map((i) => {
 
-                      return (
-                        <span>
-                          <span>
-                            <b>{i}:</b> {information[item][i]}
+                        return (
+                          <span key={i}>
+                            <span>
+                              <b>{i}:</b> {information[item][i]}
+                            </span>
+                            <hr />
                           </span>
-                          <hr />
-                        </span>
-                      );
-                    })}
-                    </Panel>
-                  </Collapse>
-                }
+                        );
+                      })}
+                      </Panel>
+                    </Collapse>
+                  }
 
-                return <p style={{ marginLeft: 7 }}>
-                  <b>{item}:</b> {information[item]}
-                  <hr />
-                </p>
-              })
-            }
+                  return <div key={item} style={{ marginLeft: 7 }}>
+                    <span>
+                      <b>{item}:</b> {information[item]}
+                    </span>
+                    <hr />
+                  </div>
+                })
+              }
+            </div>
           </div>
 
         </div>

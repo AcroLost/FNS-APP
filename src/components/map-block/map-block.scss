@@ -1,3 +1,27 @@
 .map {
   margin-top: 15px;
+  height: 585px;
+  
+
+  &__buttons {
+    margin-top: 10px;
+    display: flex; 
+    justify-content: center;
+    flex-direction: row;
+    
+    .map__button {
+      width: 200px;
+      height: 40px;
+    }
+  
+    .button_margin {
+      margin-left: 15px;
+    }
+  }
+
+
+  &__block {
+    width: 665px; 
+    height: 560px;
+  }
 }

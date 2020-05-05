@@ -1,29 +1,34 @@
-.companyList {
-  text-align: left;
-  width: 400px;
-  margin-left: 20px;
-  background-color: white;
-  padding: 10px;
-  
-  height: 615px;
+.information{
+  width: 420px;
+  margin-top: -25px;
 
-  .company {
-    
-    &_active {
-      background-color: #F3E6E6;
-    }
+  &__wrapper {
+    text-align: left;
+    width: 400px;
+    margin-left: 20px;
+    background-color: white;
+    padding: 10px;
 
-    .active {
-      background-color: #74A8DA;
-    }
+    height: 615px;
 
-    .unActive {
-      background-color: rgb(230, 118, 137);
-    }
+    .company {
 
-    &:hover {
-      cursor: pointer;
-      background-color: #F3E6E6;
+      &_active {
+        background-color: #F3E6E6;
+      }
+
+      .active {
+        background-color: #74A8DA;
+      }
+
+      .unActive {
+        background-color: rgb(230, 118, 137);
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: #F3E6E6;
+      }
     }
   }
 }

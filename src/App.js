@@ -12,22 +12,38 @@ import FullDescription from './components/fullDescription/fullDescription';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import CompanyList from './components/companyList/companyList';
 import HeaderContainer from './components/header/header';
+import { useState } from 'react';
 
-const App = ({ error, searchCompany, clearCheckbox, getRegion, getCoordinates, list, loading, verificatePartner, onGetStatement, onGetInformation, company, setLoadingFalse, getCompany, Positive, Negative, fullInformation, historyList, companyNull }) => {
+const App = ({ error, searchCompany, clearCheckbox, getRegion, getCoordinates, list, loading, verificatePartner, onGetStatement, onGetInformation, company, setLoadingFalse, getCompany, Positive, Negative, fullInformation, historyList, companyNull, regions }) => {
+
+  const [menu, setMenu] = useState('none')
+
+  const toggleMenu = () => {
+
+    if (menu === 'block') {
+      setMenu('none');
+    } else {
+      setMenu('block');
+    }
+  }
 
   return (
     <div className="main">
 
-      <HeaderContainer companyNull={companyNull} />
+      <HeaderContainer companyNull={companyNull}
+        toggleMenu={toggleMenu} />
+
       <div className="search">
         <div className="search__wrapper">
 
           <Route path='/home' render={() => {
-            return <div style={{ height: 615 }}>
+
+            return <div>
               <SearchBlock onSearchCompany={searchCompany}
                 error={error}
                 onClearCheckbox={clearCheckbox}
-                getRegion={getRegion} />
+                getRegion={getRegion}
+                regionsListState={regions} />
 
               <MapBlock list={list}
                 onGetCoordinates={getCoordinates}
@@ -64,8 +80,11 @@ const App = ({ error, searchCompany, clearCheckbox, getRegion, getCoordinates, l
             <Route exact path="/" render={() => <Redirect to="/home" />} />
 
           </Switch>
-          <QueryHistory onSearchCompany={searchCompany}
-            historyList={historyList} />
+
+          <QueryHistory menu={menu}
+            onSearchCompany={searchCompany}
+            historyList={historyList}
+            toggleMenu={toggleMenu} />
 
         </div>
       </div>

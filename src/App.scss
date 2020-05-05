@@ -11,10 +11,173 @@ body {
   background-color: rgb(243,230,230);
   
   .search__wrapper {
-    height: 680px;
+    height: 690px;
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     align-items: center;
     text-align: center;
+  }
+}
+
+@media (max-width: 1100px) {
+  .main {
+    .search {
+      .search__company {
+        margin-top: 15px;
+      }
+    }
+    .information {
+      width: 665px;
+
+      &__wrapper {
+        width: 665px;
+        margin: 25px 0 15px 0;
+      }
+
+      .description {
+        margin-top: 60px;
+      }
+      .fullDescription {
+        margin-top: 60px;
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .main {
+    .header {
+      &__wrapper {
+        .name { 
+          font-size: 20px;
+          margin-left: 30px;
+        }
+      }
+    }
+  }
+
+  .search {
+    &__company {
+      input {
+        width: 240px;
+      }
+    }
+    .map {
+      margin: 15px auto 0;
+      width: 500px;
+
+      &__buttons {
+        .map__button {
+          width: 156px;
+          height: 35px;
+          font-size: 12px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+    .information {
+      width: 500px;
+      &__wrapper {
+        width: 500px;
+      }
+    }
+  }
+  
+}
+
+@media (max-width: 530px) {
+  .main{
+    .search {
+      &__wrapper {
+        height: 670px;
+      }
+      &__company {
+        input {
+          width: 180px;
+        }
+      }
+      .map {
+        width: 440px;
+        .button_margin {
+          margin-left: 2px;
+        }
+
+        &__buttons {
+          .map__button {
+            width: 140px;
+            height: 30px;
+            font-size: 10px;
+            margin-bottom: 5px;
+          }
+        }
+      }
+
+      .information {
+        width: 440px;
+        &__wrapper {
+          width: 440px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  
+  .main{
+    .header {
+      &__wrapper {
+        .logo {
+          margin-left: 0px;
+        }
+        .name { 
+          font-size: 14px;
+          margin-left: 7px;
+        }
+      }
+    }
+
+    .search {
+      &__wrapper {
+        height: 670px;
+      }
+      &__company {
+        input {
+          width: 175px;
+        }
+      }
+      .map {
+        width: 300px;
+        .button_margin {
+          margin-left: 2px;
+        }
+
+        &__buttons {
+          flex-direction: column;
+          align-items: center;
+          .map__button {
+            width: 140px;
+            height: 30px;
+            font-size: 10px;
+            margin-bottom: 5px;
+          }
+        }
+      }
+
+      .information {
+        width: 310px;
+        
+        &__wrapper {
+          width: 310px;
+        }
+        .description {
+          margin-top: 120px;
+        }
+        .fullDescription {
+          margin-top: 120px;
+        }
+      }
+    }
   }
 }

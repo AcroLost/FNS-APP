@@ -10,12 +10,12 @@ const CompanyDescription = ({ positive, negative, status }) => {
   const active = status === "Действующее" ? 'active' : 'unActive';
 
   return (
-    <div style={{ width: 420 }}>
+    <div className="information">
       {!positive || !negative
 
-        ? <Spin style={{ margin: '0 auto' }} size="large" />
+        ? <Spin style={{ margin: '100px auto' }} size="large" />
 
-        : <div className="description">
+        : <div style={{ overflowY: 'scroll' }} className="information__wrapper description">
 
           <div>
             <b style={{ fontSize: 17 }}>Позитивные факторы:</b>
@@ -25,11 +25,12 @@ const CompanyDescription = ({ positive, negative, status }) => {
 
                 if (typeof positive[item] === 'object') {
 
-                  return <Collapse style={{ marginLeft: 7 }}>
-                    <Panel header={item} key={item}>
+                  return <Collapse key={item} style={{ marginLeft: 7 }}>
+                    <Panel header={item}>
                       {Object.keys(positive[item]).map((i) => {
+
                         return (
-                          <span>
+                          <span key={i}>
                             <span>
                               <b>{i}:</b> {positive[item][i]}
                             </span>
@@ -41,7 +42,7 @@ const CompanyDescription = ({ positive, negative, status }) => {
                   </Collapse>
                 }
 
-                return <p style={{ marginLeft: 15 }}>
+                return <p key={item} style={{ marginLeft: 15 }}>
                   <b>{item}:</b> {positive[item]}
                 </p>
 
@@ -53,16 +54,17 @@ const CompanyDescription = ({ positive, negative, status }) => {
           <div style={{ marginTop: 20 }}>
 
             <b style={{ fontSize: 17 }}>Негативные факторы:</b>
+
             {Object.keys(negative).length > 0
               ? Object.keys(negative).map((item) => {
 
                 if (typeof negative[item] === 'object') {
 
-                  return <Collapse style={{ marginLeft: 7 }}>
-                    <Panel header={item} key={item}>
+                  return <Collapse key={item} style={{ marginLeft: 7 }}>
+                    <Panel header={item}>
                       {Object.keys(negative[item]).map((i) => {
                         return (
-                          <span>
+                          <span key={i}>
                             <span>
                               <b>{i}:</b> {negative[item][i]}
                             </span>
@@ -74,7 +76,7 @@ const CompanyDescription = ({ positive, negative, status }) => {
                   </Collapse>
                 }
 
-                return <p style={{ marginLeft: 15 }}>
+                return <p key={item} style={{ marginLeft: 15 }}>
                   <b>{item}:</b> {negative[item]}
                 </p>;
               })

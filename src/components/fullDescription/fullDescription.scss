@@ -1,9 +1,12 @@
-.fullDescription{
-  text-align: left;
-  width: 400px;
-  margin-left: 20px;
-  background-color: white;
-  padding: 10px;
-  overflow-y: scroll;
-  height: 615px;
+.information {
+  width: 420px;
+
+  &__wrapper .fullDescription{
+    text-align: left;
+    width: 400px;
+    margin-left: 20px;
+    background-color: white;
+    padding: 10px;
+    height: 615px;
+  }
 }
