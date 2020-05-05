@@ -24,12 +24,14 @@ const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckb
     [regions, setRegions] = useState([]);
 
   useEffect(() => {
+
     regionchiki.map((reg) => {
       setRegions((prevRegions) => [
         ...prevRegions,
         createRegion(reg)
       ]);
     })
+
   }, []);
 
   const checked = (regId, region) => {
@@ -63,23 +65,37 @@ const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckb
     setCheckboxList(regionsListState);
     setDisplay(false);
 
+
     if (regionsListState.length) {
-      const newArr = regions.map((region) => {
+      regions.map((region) => {
 
-        return regionsListState.map((reg) => {
-
+        let check = 0;
+        regionsListState.map((reg) => {
 
           if (region.name === reg) {
 
-            return { ...region, checked: true }
-          } else {
+            check++;
+            setRegions((prevRegions) => [
+              ...prevRegions.slice(0, region.id),
+              { ...region, checked: true },
+              ...prevRegions.slice(region.id + 1),
+            ]);
 
-            return { ...region, checked: false }
+          } else {
+            if (check > 0) {
+              return
+            }
+            setRegions((prevRegions) => {
+
+              return [
+                ...prevRegions.slice(0, region.id),
+                { ...region, checked: false },
+                ...prevRegions.slice(region.id + 1),
+              ]
+            });
           }
         });
       });
-
-      setRegions(newArr.flat());
     } else {
 
       const newArr = regions.map((region) => {

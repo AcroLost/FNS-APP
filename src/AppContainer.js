@@ -179,9 +179,7 @@ const AppContainer = ({ history }) => {
     }
 
     regions.map((region) => {
-      debugger;
       regionsList.map((reg) => {
-        debugger;
         if (region !== reg) {
           setRegions([...regions].concat(regionsList));
         }
@@ -190,6 +188,7 @@ const AppContainer = ({ history }) => {
   }
 
   const clearCheckbox = () => {
+
     setRegions([]);
 
     document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
