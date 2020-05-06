@@ -34,6 +34,7 @@ const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckb
 
   }, []);
 
+
   const checked = (regId, region) => {
 
     setCheckboxList([...checkboxList, region])
@@ -129,8 +130,20 @@ const SearchBlock = ({ loading, getRegion, onSearchCompany, error, onClearCheckb
 
   const clearCheckbox = () => {
 
-    // setDisplay(false);
     onClearCheckbox();
+
+    if (checkboxList.length) {
+      debugger;
+      setRegions([]);
+      setCheckboxList([]);
+
+      regionchiki.map((reg) => {
+        setRegions((prevRegions) => [
+          ...prevRegions,
+          createRegion(reg)
+        ]);
+      })
+    }
   }
 
   if (loading) {
