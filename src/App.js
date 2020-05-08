@@ -1,7 +1,5 @@
 import React from 'react';
 
-import SearchBlock from './components/search-block/search-block';
-
 import 'antd/dist/antd.css';
 import './App.scss';
 
@@ -13,8 +11,9 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import CompanyList from './components/companyList/companyList';
 import HeaderContainer from './components/header/header';
 import { useState } from 'react';
+import SearchBlockContainer from './components/search-block/SearchBlockContainer';
 
-const App = ({ error, searchCompany, clearCheckbox, getRegion, getCoordinates, list, loading, verificatePartner, onGetStatement, onGetInformation, company, setLoadingFalse, getCompany, Positive, Negative, fullInformation, historyList, companyNull, regions }) => {
+const App = ({ error, searchCompany, clearCheckbox, getRegion, getCoordinates, list, loading, verificatePartner, onGetStatement, onGetInformation, company, setLoadingFalse, getCompany, Positive, Negative, fullInformation, historyList, companyNull, regions, updateRegions }) => {
 
   const [menu, setMenu] = useState('none')
 
@@ -39,11 +38,12 @@ const App = ({ error, searchCompany, clearCheckbox, getRegion, getCoordinates, l
           <Route path='/home' render={() => {
 
             return <div>
-              <SearchBlock onSearchCompany={searchCompany}
+              <SearchBlockContainer onSearchCompany={searchCompany}
                 error={error}
                 onClearCheckbox={clearCheckbox}
                 getRegion={getRegion}
-                regionsListState={regions} />
+                regionsListState={regions}
+                updateRegions={updateRegions} />
 
               <MapBlock list={list}
                 onGetCoordinates={getCoordinates}

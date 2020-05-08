@@ -173,22 +173,25 @@ const AppContainer = ({ history }) => {
   }
 
   const getRegion = (regionsList) => {
+
     if (!regions.length) {
       setRegions(regionsList);
       return
     }
 
-    regions.map((region) => {
-      regionsList.map((reg) => {
-        if (region !== reg) {
-          setRegions([...regions].concat(regionsList));
-        }
-      })
-    })
+    const newRegions = [...regions].concat(regionsList);
+    setRegions(Array.from(new Set(newRegions)));
+  }
+
+  const updateRegions = (id) => {
+
+    setRegions(() => [
+      ...regions.slice(0, id),
+      ...regions.slice(id + 1)
+    ])
   }
 
   const clearCheckbox = () => {
-
     setRegions([]);
 
     document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
@@ -198,7 +201,7 @@ const AppContainer = ({ history }) => {
     getRegion={getRegion} getCoordinates={getCoordinatesCompany} list={list} loading={loading}
     verificatePartner={verificatePartner} onGetStatement={onGetStatement} onGetInformation={onGetInformation}
     company={company} setLoadingFalse={setLoadingFalse} getCompany={getCompany} Positive={Positive} Negative={Negative}
-    fullInformation={fullInformation} historyList={historyList} companyNull={companyNull} />
+    fullInformation={fullInformation} historyList={historyList} companyNull={companyNull} updateRegions={updateRegions} />
 }
 
 const AppContainerWithRouter = withRouter(AppContainer);

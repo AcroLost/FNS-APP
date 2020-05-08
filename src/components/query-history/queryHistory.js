@@ -22,27 +22,17 @@ const QueryHistory = ({ menu, historyList, onSearchCompany, toggleMenu }) => {
 
     return (
         <div className="history" style={{
-            display: menu,
-            position: 'absolute',
-            top: '106px',
-            right: '10px',
-            border: '1px solid #74A8DA',
-            background: 'white',
-            padding: '14px 20px 6px',
-            height: 615,
-            boxShadow: '-4px 5px 13px 0px #74A8DA'
+            display: menu
         }}>
             <div style={{ position: "relative" }}>
 
-                <span onClick={toggleMenu} style={{
-                    position: 'absolute', top: '-16px', right: '-11px', fontSize: '18px', cursor: 'pointer'
-                }}>&times;</span>
+                <span className="history_close" onClick={toggleMenu}>
+                    &times;
+                </span>
 
-                <p style={{
-                    fontSize: 17,
-                    fontWeight: 500
-                }}>История запросов
-            </p>
+                <p className="history__title">
+                    История запросов
+                </p>
 
                 {items}
             </div>
