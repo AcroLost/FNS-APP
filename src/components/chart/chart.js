@@ -4,7 +4,7 @@ import { VictoryPie } from 'victory';
 const Chart = ({ positive, negative }) => {
 
     return (
-        <div>
+        <div className="chart">
 
             <VictoryPie width={330} height={330} innerRadius={60}
                 padAngle={5}
