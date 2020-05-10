@@ -1,11 +1,11 @@
 {
-  "name": "FTS-APP",
-  "short_name": "FTS-APP",
+  "name": "FNS-APP",
+  "short_name": "FNS-APP",
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
   "display": "standalone",
   "orientation": "portrait",
-  "start_url": "./home",
+  "start_url": ".",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",
