@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 
 import './SearchBlock.scss';
-import { checkedRegion, search } from '../../helpers/helpers';
+import { checkedRegion } from '../../helpers/helpers';
 import { useEffect } from 'react';
 import SearchBlock from './SearchBlock';
+import { message } from 'antd';
 
-const SearchBlockContainer = ({ getRegion, onSearchCompany, error, onClearCheckbox, regionsListState, updateRegions }) => {
+const SearchBlockContainer = ({ getRegion, onSearchCompany, onClearCheckbox, regionsListState, updateRegions }) => {
 
-    const regionchiki = ['Москва', 'Санкт-Петербург', 'Адыгея', 'Башкортостан', 'Бурятия', 'Алтай', 'Дагестан', 'Ингушетия', 'Кабардино-Балкарская', 'Калмыкия', 'Карачаево-Черкесская', 'Карелия', 'Коми', 'Марий Эл', 'Мордовия', 'Саха', 'Северная Осетия', 'Татарстан', 'Тыва', 'Удмуртская', 'Хакасия', 'Чеченская', 'Чувашская', 'Алтайский', 'Краснодарский', 'Красноярский', 'Приморский', 'Ставропольский', 'Хабаровский', 'Амурская', 'Архангельская', 'Астраханская', 'Белгородская', 'Брянская', 'Владимирская', 'Волгоградская', 'Воронежская', 'Ивановская', 'Иркутская', 'Калининградская', 'Калужская', 'Камчатский', 'Кемеровская', 'Кировская', 'Костромская', 'Курганская', 'Курская', 'Ленинградская', 'Липецкая', 'Магаданская', 'Московская', 'Мурманская', 'Нижегородская', 'Новгородская', 'Новосибирская', 'Омская', 'Оренбургская', 'Орловская', 'Пензенская', 'Пермский', 'Псковская', 'Ростовская', 'Рязанская', 'Самарская', 'Саратовская', 'Сахалинская', 'Свердловская', 'Смоленская', 'Тамбовская', 'Тверская', 'Томская', 'Тульская', 'Тюменская', 'Ульяновская', 'Челябинская', 'Забайкальский', 'Ярославская', 'Еврейская', 'Ханты-Мансийский', 'Чукотский', 'Ямало-Ненецкий', 'Крым', 'Севастополь', 'Байконур'];
+    const regionsOfRussia = ['Москва', 'Санкт-Петербург', 'Адыгея', 'Башкортостан', 'Бурятия', 'Алтай', 'Дагестан', 'Ингушетия', 'Кабардино-Балкарская', 'Калмыкия', 'Карачаево-Черкесская', 'Карелия', 'Коми', 'Марий Эл', 'Мордовия', 'Саха', 'Северная Осетия', 'Татарстан', 'Тыва', 'Удмуртская', 'Хакасия', 'Чеченская', 'Чувашская', 'Алтайский', 'Краснодарский', 'Красноярский', 'Приморский', 'Ставропольский', 'Хабаровский', 'Амурская', 'Архангельская', 'Астраханская', 'Белгородская', 'Брянская', 'Владимирская', 'Волгоградская', 'Воронежская', 'Ивановская', 'Иркутская', 'Калининградская', 'Калужская', 'Камчатский', 'Кемеровская', 'Кировская', 'Костромская', 'Курганская', 'Курская', 'Ленинградская', 'Липецкая', 'Магаданская', 'Московская', 'Мурманская', 'Нижегородская', 'Новгородская', 'Новосибирская', 'Омская', 'Оренбургская', 'Орловская', 'Пензенская', 'Пермский', 'Псковская', 'Ростовская', 'Рязанская', 'Самарская', 'Саратовская', 'Сахалинская', 'Свердловская', 'Смоленская', 'Тамбовская', 'Тверская', 'Томская', 'Тульская', 'Тюменская', 'Ульяновская', 'Челябинская', 'Забайкальский', 'Ярославская', 'Еврейская', 'Ханты-Мансийский', 'Чукотский', 'Ямало-Ненецкий', 'Крым', 'Севастополь', 'Байконур'];
 
-    let id = 0;
+    let id = 1;
     const createRegion = (name) => {
         return { id: id++, name: name, checked: false }
     }
@@ -22,7 +23,7 @@ const SearchBlockContainer = ({ getRegion, onSearchCompany, error, onClearCheckb
 
     useEffect(() => {
 
-        regionchiki.map((reg) => {
+        regionsOfRussia.map((reg) => {
             setRegions((prevRegions) => [
                 ...prevRegions,
                 createRegion(reg)
@@ -61,8 +62,7 @@ const SearchBlockContainer = ({ getRegion, onSearchCompany, error, onClearCheckb
     const cancelRegion = () => {
 
         if (!checkboxList.length) {
-            setDisplay(false);
-            return
+            return setDisplay(false);
         }
         setCheckboxList(regionsListState);
         setDisplay(false);
@@ -124,6 +124,9 @@ const SearchBlockContainer = ({ getRegion, onSearchCompany, error, onClearCheckb
 
     const submit = (event) => {
         event.preventDefault();
+        if (!input.length) {
+            return message.error("Извините, поле не может быть пустым");
+        }
         onSearchCompany(input);
         setInput('');
     }
@@ -137,7 +140,7 @@ const SearchBlockContainer = ({ getRegion, onSearchCompany, error, onClearCheckb
             setRegions([]);
             setCheckboxList([]);
 
-            regionchiki.map((reg) => {
+            regionsOfRussia.map((reg) => {
                 setRegions((prevRegions) => [
                     ...prevRegions,
                     createRegion(reg)
@@ -146,40 +149,15 @@ const SearchBlockContainer = ({ getRegion, onSearchCompany, error, onClearCheckb
         }
     }
 
-    const regionsList = regions.map((region) => {
 
-        return (
-
-            <li style={{ textAlign: 'left', marginLeft: 10 }} key={region.name}>
-                {region.checked
-
-                    ? <input checked id={region.id}
-                        type="checkbox"
-                        onClick={() => unChecked(region.id, region.name)}
-                        value={region.name} />
-
-                    : <input id={region.id}
-                        type="checkbox"
-                        onClick={() => checked(region.id, region.name)}
-                        value={region.name} />
-                }
-
-                <label style={{ marginLeft: 3 }} htmlFor={region.id}>
-                    {region.name}
-                </label>
-                <hr />
-            </li>
-        );
-    });
-
-    const visibleRegions = search(regionsList, inputFilter);
 
     return (
         <SearchBlock clearCheckbox={clearCheckbox} submit={submit}
             inputFilterChange={inputFilterChange} inputChange={inputChange}
             submitRegion={submitRegion} cancelRegion={cancelRegion}
             checked={checked} unChecked={unChecked}
-            error={error} inputFilter={inputFilter} display={display} regions={regions} input={input} setDisplay={setDisplay} visibleRegions={visibleRegions} />
+            inputFilter={inputFilter} display={display} regions={regions}
+            input={input} setDisplay={setDisplay} />
     );
 }
 

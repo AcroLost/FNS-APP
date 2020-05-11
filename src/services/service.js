@@ -7,7 +7,6 @@ const _apiKey = '&key=ba5ab0e0ebe4a4661ffb53192c65fe0118480639',
 export const apiFNS = {
 
   async getCompany(query) {
-
     const res = await axios.get(`${_corsAnywhere}${_apiFNS}${query}${_apiKey}`);
     return res.data.items;
   },

@@ -1,13 +1,39 @@
 import React from 'react';
-import { Form, Input, Button, Alert, Modal } from 'antd';
+import { Form, Input, Button, Modal } from 'antd';
 
 import { SearchOutlined } from '@ant-design/icons'
 import './SearchBlock.scss';
 
 import { UnorderedListOutlined } from '@ant-design/icons';
+import { search } from '../../helpers/helpers';
 
 
-const SearchBlock = ({ error, clearCheckbox, submit, submitRegion, inputChange, inputFilterChange, cancelRegion, inputFilter, display, input, setDisplay, visibleRegions }) => {
+const SearchBlock = ({ clearCheckbox, submit, submitRegion, inputChange, inputFilterChange, cancelRegion, inputFilter, display, input, setDisplay, regions, checked, unChecked }) => {
+
+  const regionsList = regions.map((region) => {
+
+    return <li key={region.id} style={{ textAlign: 'left', marginLeft: 10 }}>
+      {region.checked
+
+        ? <input checked id={region.id}
+          type="checkbox"
+          onClick={() => unChecked(region.id, region.name)}
+          value={region.name} />
+
+        : <input id={region.id}
+          type="checkbox"
+          onClick={() => checked(region.id, region.name)}
+          value={region.name} />
+      }
+
+      <label style={{ marginLeft: 3 }} htmlFor={region.id}>
+        {region.name}
+      </label>
+      <hr />
+    </li>
+  });
+
+  const visibleRegions = search(regionsList, inputFilter);
 
   return (
     <div>
@@ -25,14 +51,6 @@ const SearchBlock = ({ error, clearCheckbox, submit, submitRegion, inputChange, 
           Поиск
         </Button>
 
-        {error &&
-          <Alert style={{ width: 400, margin: '5px auto 0' }}
-            message="Ошибка"
-            description="Поле не может быть пустым."
-            type="error"
-            showIcon
-          />
-        }
 
         {document.body.clientWidth <= 450
 

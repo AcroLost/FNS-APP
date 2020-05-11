@@ -6,12 +6,12 @@ import App from './App';
 import { withRouter } from 'react-router-dom';
 
 import { apiFNS, apiYandex } from './services/service';
+import { message } from 'antd';
 
 const AppContainer = ({ history }) => {
 
   const [list, setList] = useState([]),
     [company, setCompany] = useState(null),
-    [error, setError] = useState(false),
     [loading, setLoading] = useState(false),
     [Positive, setPositive] = useState(null),
     [Negative, setNegative] = useState(null),
@@ -48,13 +48,6 @@ const AppContainer = ({ history }) => {
 
   const searchCompany = (name) => {
 
-    if (!name) {
-      setError(true)
-      return
-    } else {
-      setError(false)
-    }
-
     history.push('/home/company_list');
     const newItem = { name }
 
@@ -72,21 +65,19 @@ const AppContainer = ({ history }) => {
     apiFNS.getCompany(name)
       .then((companyList) => {
 
+        if (!companyList.length) {
+          setLoadingFalse();
+          return message.warning("Извините, по вашему запросу ничего не было найдено");
+        }
+
         companyList.map((item) => {
 
           if (item.hasOwnProperty('ЮЛ')) {
 
-            if (item.ЮЛ.ГдеНайдено === 'ИНН') {
+            if (item.ЮЛ.ГдеНайдено === 'ИНН' || item.ЮЛ.ГдеНайдено === 'ОГРН' || item.ЮЛ.ГдеНайдено.indexOf('Наименование ЮЛ') > -1 || item.ЮЛ.ГдеНайдено.indexOf('ФИО') > -1) {
 
-              return getCoordinatesCompany([item.ЮЛ]);
-
-            } else if (item.ЮЛ.ГдеНайдено === 'ОГРН') {
-              return getCoordinatesCompany([item.ЮЛ]);
-
-            } else if (item.ЮЛ.ГдеНайдено.indexOf('Наименование ЮЛ' || 'ФИО') > -1) {
               return getCoordinatesCompany([item.ЮЛ]);
             }
-
           } else if (item.hasOwnProperty('ИП')) {
 
             return getCoordinatesCompany([item.ИП]);
@@ -197,7 +188,7 @@ const AppContainer = ({ history }) => {
     document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
   }
 
-  return <App regions={regions} error={error} searchCompany={searchCompany} clearCheckbox={clearCheckbox}
+  return <App regions={regions} searchCompany={searchCompany} clearCheckbox={clearCheckbox}
     getRegion={getRegion} getCoordinates={getCoordinatesCompany} list={list} loading={loading}
     verificatePartner={verificatePartner} onGetStatement={onGetStatement} onGetInformation={onGetInformation}
     company={company} setLoadingFalse={setLoadingFalse} getCompany={getCompany} Positive={Positive} Negative={Negative}

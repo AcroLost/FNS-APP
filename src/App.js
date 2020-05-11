@@ -39,7 +39,6 @@ const App = ({ error, searchCompany, clearCheckbox, getRegion, getCoordinates, l
 
             return <div>
               <SearchBlockContainer onSearchCompany={searchCompany}
-                error={error}
                 onClearCheckbox={clearCheckbox}
                 getRegion={getRegion}
                 regionsListState={regions}
