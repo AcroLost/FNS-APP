@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import './companyList.scss';
-import { Spin } from 'antd';
 import { NavLink, withRouter } from 'react-router-dom';
-import { useEffect } from 'react';
+import { Spin } from 'antd';
+import './CompanyList.scss';
 
 const CompanyList = ({ history, companyNull, list, onGetCompany, loading }) => {
 

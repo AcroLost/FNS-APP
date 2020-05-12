@@ -1,11 +1,12 @@
 import React from 'react';
 
-import './header.scss';
+import './Header.scss';
 import logo from '../../image/logo.png';
-import { withRouter } from 'react-router-dom';
+
 import { Button } from 'antd';
 
 import { UnorderedListOutlined } from '@ant-design/icons';
+import { withRouter } from 'react-router-dom';
 
 const Header = ({ history, companyNull, toggleMenu }) => {
 

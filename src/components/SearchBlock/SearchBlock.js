@@ -8,7 +8,7 @@ import { UnorderedListOutlined } from '@ant-design/icons';
 import { search } from '../../helpers/helpers';
 
 
-const SearchBlock = ({ clearCheckbox, submit, submitRegion, inputChange, inputFilterChange, cancelRegion, inputFilter, display, input, setDisplay, regions, checked, unChecked }) => {
+const SearchBlock = ({ clearCheckbox, submitSearch, submitRegion, inputChange, inputFilterChange, cancelRegion, inputFilter, input, setDisplay, display, regions, checked, unChecked }) => {
 
   const regionsList = regions.map((region) => {
 
@@ -46,7 +46,7 @@ const SearchBlock = ({ clearCheckbox, submit, submitRegion, inputChange, inputFi
         <Button type="primary"
           htmlType="submit"
           icon={<SearchOutlined />}
-          onClick={submit}>
+          onClick={submitSearch}>
 
           Поиск
         </Button>
@@ -60,7 +60,6 @@ const SearchBlock = ({ clearCheckbox, submit, submitRegion, inputChange, inputFi
         }
 
       </Form>
-
 
       <Modal className="search__region"
         visible={display}

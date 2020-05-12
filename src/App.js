@@ -3,17 +3,17 @@ import React from 'react';
 import 'antd/dist/antd.css';
 import './App.scss';
 
-import MapBlock from './components/map-block';
-import QueryHistory from './components/query-history/queryHistory';
-import CompanyDescription from './components/company-description/CompanyDescription';
-import FullDescription from './components/fullDescription/fullDescription';
+import MapBlock from './components/MapBlock/MapBlock';
+import QueryHistory from './components/QueryHistory/QueryHistory';
+import CompanyDescription from './components/CompanyDescription/CompanyDescription';
+import FullDescription from './components/FullDescription/FullDescription';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import CompanyList from './components/companyList/companyList';
-import HeaderContainer from './components/header/header';
+import CompanyList from './components/CompanyList/CompanyList';
+import HeaderContainer from './components/Header/Header';
 import { useState } from 'react';
-import SearchBlockContainer from './components/search-block/SearchBlockContainer';
+import SearchBlockContainer from './components/SearchBlock/SearchBlockContainer';
 
-const App = ({ error, searchCompany, clearCheckbox, getRegion, getCoordinates, list, loading, verificatePartner, onGetStatement, onGetInformation, company, setLoadingFalse, getCompany, Positive, Negative, fullInformation, historyList, companyNull, regions, updateRegions }) => {
+const App = ({ searchCompany, clearCheckbox, getRegion, getCoordinates, list, loading, verificatePartner, onGetStatement, onGetInformation, company, setLoadingFalse, getCompany, Positive, Negative, fullInformation, historyList, companyNull, regions, updateRegions }) => {
 
   const [menu, setMenu] = useState('none')
 

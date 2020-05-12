@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-import './SearchBlock.scss';
 import { checkedRegion } from '../../helpers/helpers';
 import { useEffect } from 'react';
 import SearchBlock from './SearchBlock';
 import { message } from 'antd';
+import './SearchBlock.scss';
 
 const SearchBlockContainer = ({ getRegion, onSearchCompany, onClearCheckbox, regionsListState, updateRegions }) => {
 
@@ -122,9 +122,9 @@ const SearchBlockContainer = ({ getRegion, onSearchCompany, onClearCheckbox, reg
         setFilterInput(event.target.value)
     }
 
-    const submit = (event) => {
+    const submitSearch = (event) => {
         event.preventDefault();
-        if (!input.length) {
+        if (!input.trim()) {
             return message.error("Извините, поле не может быть пустым");
         }
         onSearchCompany(input);
@@ -152,7 +152,7 @@ const SearchBlockContainer = ({ getRegion, onSearchCompany, onClearCheckbox, reg
 
 
     return (
-        <SearchBlock clearCheckbox={clearCheckbox} submit={submit}
+        <SearchBlock clearCheckbox={clearCheckbox} submitSearch={submitSearch}
             inputFilterChange={inputFilterChange} inputChange={inputChange}
             submitRegion={submitRegion} cancelRegion={cancelRegion}
             checked={checked} unChecked={unChecked}

@@ -1,8 +1,9 @@
 import React from 'react';
 import Chart from '../chart/chart';
 
-import './companyDescription.scss';
 import { Spin, Collapse } from 'antd';
+import './CompanyDescription.scss';
+
 const { Panel } = Collapse;
 
 const CompanyDescription = ({ positive, negative, status }) => {

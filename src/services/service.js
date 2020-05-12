@@ -1,30 +1,34 @@
 import * as axios from "axios";
 
 const _apiKey = '&key=ba5ab0e0ebe4a4661ffb53192c65fe0118480639',
-  _apiFNS = 'https://api-fns.ru/api/search?q=',
+  _apiFNS = 'https://api-fns.ru/api',
   _corsAnywhere = 'https://cors-anywhere.herokuapp.com/';
 
 export const apiFNS = {
 
   async getCompany(query) {
-    const res = await axios.get(`${_corsAnywhere}${_apiFNS}${query}${_apiKey}`);
-    return res.data.items;
+    const res = await axios.get(`${_corsAnywhere}${_apiFNS}/search?q=${query}${_apiKey}`);
+    if (res.data.items) {
+      return res.data.items;
+    } else {
+      return res.data
+    }
   },
 
   async verificationPartner(INN) {
 
-    const query = await axios.get(`${_corsAnywhere}https://api-fns.ru/api/check?req=${INN}${_apiKey}`);
+    const query = await axios.get(`${_corsAnywhere}${_apiFNS}/check?req=${INN}${_apiKey}`);
     return _transformVerification(query.data.items[0].ЮЛ || query.data.items[0].ИП);
   },
 
   async getStatement(INN) {
 
-    return `https://api-fns.ru/api/vyp?req=${INN}${_apiKey}`;
+    return `${_apiFNS}/vyp?req=${INN}${_apiKey}`;
   },
 
   async getFullInformation(INN) {
 
-    const query = await axios.get(`${_corsAnywhere}https://api-fns.ru/api/egr?req=${INN}&key=${_apiKey}`);
+    const query = await axios.get(`${_corsAnywhere}${_apiFNS}/egr?req=${INN}&key=${_apiKey}`);
     return query.data.items[0].ЮЛ || query.data.items[0].ИП;
   }
 }

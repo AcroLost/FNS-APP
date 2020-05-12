@@ -68,6 +68,9 @@ const AppContainer = ({ history }) => {
         if (!companyList.length) {
           setLoadingFalse();
           return message.warning("Извините, по вашему запросу ничего не было найдено");
+        } else if (companyList.indexOf('Ошибка') > -1) {
+          setLoadingFalse();
+          return message.error(companyList);
         }
 
         companyList.map((item) => {

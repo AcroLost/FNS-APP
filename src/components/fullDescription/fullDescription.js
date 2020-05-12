@@ -1,7 +1,8 @@
 import React from 'react';
 
-import './fullDescription.scss';
 import { Spin, Collapse } from 'antd';
+import './FullDescription.scss';
+
 const { Panel } = Collapse;
 
 const FullDescription = ({ information }) => {
