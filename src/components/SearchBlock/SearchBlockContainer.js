@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import { checkedRegion } from '../../helpers/helpers';
 import { useEffect } from 'react';
 import SearchBlock from './SearchBlock';
 import { message } from 'antd';
 import './SearchBlock.scss';
+import { Context } from '../../context';
 
-const SearchBlockContainer = ({ getRegion, onSearchCompany, onClearCheckbox, regionsListState, updateRegions }) => {
+const SearchBlockContainer = ({ regionsListState }) => {
 
+    const { searchCompany, clearCheckbox, getRegion, updateRegions } = useContext(Context);
     const regionsOfRussia = ['Москва', 'Санкт-Петербург', 'Адыгея', 'Башкортостан', 'Бурятия', 'Алтай', 'Дагестан', 'Ингушетия', 'Кабардино-Балкарская', 'Калмыкия', 'Карачаево-Черкесская', 'Карелия', 'Коми', 'Марий Эл', 'Мордовия', 'Саха', 'Северная Осетия', 'Татарстан', 'Тыва', 'Удмуртская', 'Хакасия', 'Чеченская', 'Чувашская', 'Алтайский', 'Краснодарский', 'Красноярский', 'Приморский', 'Ставропольский', 'Хабаровский', 'Амурская', 'Архангельская', 'Астраханская', 'Белгородская', 'Брянская', 'Владимирская', 'Волгоградская', 'Воронежская', 'Ивановская', 'Иркутская', 'Калининградская', 'Калужская', 'Камчатский', 'Кемеровская', 'Кировская', 'Костромская', 'Курганская', 'Курская', 'Ленинградская', 'Липецкая', 'Магаданская', 'Московская', 'Мурманская', 'Нижегородская', 'Новгородская', 'Новосибирская', 'Омская', 'Оренбургская', 'Орловская', 'Пензенская', 'Пермский', 'Псковская', 'Ростовская', 'Рязанская', 'Самарская', 'Саратовская', 'Сахалинская', 'Свердловская', 'Смоленская', 'Тамбовская', 'Тверская', 'Томская', 'Тульская', 'Тюменская', 'Ульяновская', 'Челябинская', 'Забайкальский', 'Ярославская', 'Еврейская', 'Ханты-Мансийский', 'Чукотский', 'Ямало-Ненецкий', 'Крым', 'Севастополь', 'Байконур'];
 
     let id = 1;
@@ -127,13 +129,13 @@ const SearchBlockContainer = ({ getRegion, onSearchCompany, onClearCheckbox, reg
         if (!input.trim()) {
             return message.error("Извините, поле не может быть пустым");
         }
-        onSearchCompany(input);
+        searchCompany(input);
         setInput('');
     }
 
-    const clearCheckbox = () => {
+    const onClearCheckbox = () => {
 
-        onClearCheckbox();
+        clearCheckbox();
 
         if (checkboxList.length) {
 
@@ -152,7 +154,7 @@ const SearchBlockContainer = ({ getRegion, onSearchCompany, onClearCheckbox, reg
 
 
     return (
-        <SearchBlock clearCheckbox={clearCheckbox} submitSearch={submitSearch}
+        <SearchBlock clearCheckbox={onClearCheckbox} submitSearch={submitSearch}
             inputFilterChange={inputFilterChange} inputChange={inputChange}
             submitRegion={submitRegion} cancelRegion={cancelRegion}
             checked={checked} unChecked={unChecked}

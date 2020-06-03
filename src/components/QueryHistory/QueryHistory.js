@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import './QueryHistory.scss'
+import { Context } from '../../context';
 
-const QueryHistory = ({ menu, historyList, onSearchCompany, toggleMenu }) => {
+const QueryHistory = ({ menu, toggleMenu }) => {
+
+    const { searchCompany, historyList } = useContext(Context);
 
     let id = 0;
     const items = historyList.map((item) => {
         id++
         return (
             <p key={id} className='history__item'>
-                <span onClick={() => onSearchCompany(item.name)}>
+                <span onClick={() => searchCompany(item.name)}>
                     {item.name}
                 </span>
                 <hr />

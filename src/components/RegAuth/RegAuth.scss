@@ -1,0 +1,18 @@
+.registration {
+  background-color: #ffffff;
+  padding: 20px 30px;
+  
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+  }
+  &__form {
+    width: 400px;
+  }
+  &__password {
+    margin-top: 3px;
+  }
+  &__button {
+    margin-top: 10px;
+  }
+}

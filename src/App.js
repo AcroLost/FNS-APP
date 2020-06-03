@@ -12,10 +12,23 @@ import CompanyList from './components/CompanyList/CompanyList';
 import HeaderContainer from './components/Header/Header';
 import { useState } from 'react';
 import SearchBlockContainer from './components/SearchBlock/SearchBlockContainer';
+import RegAuth from './components/RegAuth/RegAuth';
+import { useEffect } from 'react';
+import fire from './firebase';
 
-const App = ({ searchCompany, clearCheckbox, getRegion, getCoordinates, list, loading, verificatePartner, onGetStatement, onGetInformation, company, setLoadingFalse, getCompany, Positive, Negative, fullInformation, historyList, companyNull, regions, updateRegions }) => {
+const App = ({ history, company, regions }) => {
 
-  const [menu, setMenu] = useState('none')
+  const [menu, setMenu] = useState('none');
+
+  useEffect(() => {
+    fire.auth().onAuthStateChanged(userIn => {
+      if (userIn) {
+        history.push('/home');
+      } else {
+        history.push('/sign/login');
+      }
+    });
+  }, []);
 
   const toggleMenu = () => {
 
@@ -29,8 +42,7 @@ const App = ({ searchCompany, clearCheckbox, getRegion, getCoordinates, list, lo
   return (
     <div className="main">
 
-      <HeaderContainer companyNull={companyNull}
-        toggleMenu={toggleMenu} />
+      <HeaderContainer toggleMenu={toggleMenu} />
 
       <div className="search">
         <div className="search__wrapper">
@@ -38,20 +50,8 @@ const App = ({ searchCompany, clearCheckbox, getRegion, getCoordinates, list, lo
           <Route path='/home' render={() => {
 
             return <div>
-              <SearchBlockContainer onSearchCompany={searchCompany}
-                onClearCheckbox={clearCheckbox}
-                getRegion={getRegion}
-                regionsListState={regions}
-                updateRegions={updateRegions} />
-
-              <MapBlock list={list}
-                onGetCoordinates={getCoordinates}
-                loading={loading}
-                verificatePartner={verificatePartner}
-                getStatement={onGetStatement}
-                getInformation={onGetInformation}
-                company={company}
-                setLoadingFalse={setLoadingFalse} />
+              <SearchBlockContainer regionsListState={regions} />
+              <MapBlock />
             </div>
           }}
           />
@@ -59,31 +59,24 @@ const App = ({ searchCompany, clearCheckbox, getRegion, getCoordinates, list, lo
           <Switch>
 
             <Route exact path='/home/company_list' render={() =>
-
-              <CompanyList companyNull={companyNull}
-                list={list}
-                onGetCompany={getCompany}
-                loading={loading} />}
+              <CompanyList />}
             />
             <Route exact path={`/home/company_list/:company/check`} render={() =>
-
-              <CompanyDescription status={company.Статус}
-                positive={Positive}
-                negative={Negative} />}
+              <CompanyDescription status={company.Статус} />}
             />
             <Route exact path='/home/company_list/:company/full_information' render={() =>
-
-              <FullDescription information={fullInformation} />}
+              <FullDescription />}
             />
+
+            <Route path='/sign' render={() =>
+              <RegAuth />
+            } />
 
             <Route exact path="/" render={() => <Redirect to="/home" />} />
 
           </Switch>
 
-          <QueryHistory menu={menu}
-            onSearchCompany={searchCompany}
-            historyList={historyList}
-            toggleMenu={toggleMenu} />
+          <QueryHistory menu={menu} toggleMenu={toggleMenu} />
 
         </div>
       </div>

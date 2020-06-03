@@ -75,7 +75,7 @@ const SearchBlock = ({ clearCheckbox, submitSearch, submitRegion, inputChange, i
           </Button>,
 
           <Button onClick={cancelRegion} style={{ marginLeft: 5 }} type="default">Отмена</Button>
-        ]} >
+        ]}>
 
         <h3>Выбрать регионы</h3>
         <Form>

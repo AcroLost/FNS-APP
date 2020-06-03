@@ -2,15 +2,18 @@ import React from 'react';
 
 import { Spin, Collapse } from 'antd';
 import './FullDescription.scss';
+import { useContext } from 'react';
+import { Context } from '../../context';
 
 const { Panel } = Collapse;
 
-const FullDescription = ({ information }) => {
+const FullDescription = () => {
 
+  const { fullInformation } = useContext(Context);
   return (
 
     <div className="information">
-      {!information
+      {!fullInformation
 
         ? <Spin style={{ margin: '100px auto' }} size="large" />
 
@@ -20,24 +23,24 @@ const FullDescription = ({ information }) => {
             <b style={{ fontSize: 17 }}>Полная информация:</b>
             <div style={{ overflowY: 'scroll', height: 575 }}>
               {
-                Object.keys(information).map((item) => {
+                Object.keys(fullInformation).map((item) => {
 
-                  if (Array.isArray(information[item])) {
+                  if (Array.isArray(fullInformation[item])) {
 
-                    information[item].map((i) => {
+                    fullInformation[item].map((i) => {
                       return null
                     })
                   }
 
-                  if (typeof information[item] === 'object') {
+                  if (typeof fullInformation[item] === 'object') {
 
                     return <Collapse key={item} style={{ marginLeft: 7 }}>
-                      <Panel header={item} key={item}> {Object.keys(information[item]).map((i) => {
+                      <Panel header={item} key={item}> {Object.keys(fullInformation[item]).map((i) => {
 
                         return (
                           <span key={i}>
                             <span>
-                              <b>{i}:</b> {information[item][i]}
+                              <b>{i}:</b> {fullInformation[item][i]}
                             </span>
                             <hr />
                           </span>
@@ -49,7 +52,7 @@ const FullDescription = ({ information }) => {
 
                   return <div key={item} style={{ marginLeft: 7 }}>
                     <span>
-                      <b>{item}:</b> {information[item]}
+                      <b>{item}:</b> {fullInformation[item]}
                     </span>
                     <hr />
                   </div>

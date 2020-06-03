@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { YMaps, Map, Placemark, GeolocationControl } from 'react-yandex-maps';
 
 import { Spin, Button } from 'antd';
@@ -6,8 +6,15 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { DownloadOutlined } from '@ant-design/icons';
 import './MapBlock.scss';
+import { Context } from '../../context';
 
-const MapBlock = ({ getStatement, verificatePartner, getInformation, list, loading, company, setLoadingFalse }) => {
+const MapBlock = () => {
+
+  const {
+    list, loading, setLoadingFalse,
+    company, verificatePartner, getStatement,
+    getInformation
+  } = useContext(Context);
 
   const [zoom, setZoom] = useState(11),
     [center, setCenter] = useState([54.75, 56.00]);

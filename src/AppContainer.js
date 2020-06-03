@@ -7,6 +7,7 @@ import { withRouter } from 'react-router-dom';
 
 import { apiFNS, apiYandex } from './services/service';
 import { message } from 'antd';
+import { Context } from './context';
 
 const AppContainer = ({ history }) => {
 
@@ -79,17 +80,17 @@ const AppContainer = ({ history }) => {
 
             if (item.ЮЛ.ГдеНайдено === 'ИНН' || item.ЮЛ.ГдеНайдено === 'ОГРН' || item.ЮЛ.ГдеНайдено.indexOf('Наименование ЮЛ') > -1 || item.ЮЛ.ГдеНайдено.indexOf('ФИО') > -1) {
 
-              return getCoordinatesCompany([item.ЮЛ]);
+              return getCoordinates([item.ЮЛ]);
             }
           } else if (item.hasOwnProperty('ИП')) {
 
-            return getCoordinatesCompany([item.ИП]);
+            return getCoordinates([item.ИП]);
           }
         })
       });
   }
 
-  const getCoordinatesCompany = (companyList) => {
+  const getCoordinates = (companyList) => {
 
     companyList.map((i) => {
 
@@ -137,7 +138,7 @@ const AppContainer = ({ history }) => {
 
   }
 
-  const onGetStatement = () => {
+  const getStatement = () => {
 
     apiFNS.getStatement(company.ИНН)
       .then((res) => {
@@ -145,7 +146,7 @@ const AppContainer = ({ history }) => {
       })
   }
 
-  const onGetInformation = () => {
+  const getInformation = () => {
 
     apiFNS.getFullInformation(company.ИНН)
       .then((res) => {
@@ -191,11 +192,13 @@ const AppContainer = ({ history }) => {
     document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false);
   }
 
-  return <App regions={regions} searchCompany={searchCompany} clearCheckbox={clearCheckbox}
-    getRegion={getRegion} getCoordinates={getCoordinatesCompany} list={list} loading={loading}
-    verificatePartner={verificatePartner} onGetStatement={onGetStatement} onGetInformation={onGetInformation}
-    company={company} setLoadingFalse={setLoadingFalse} getCompany={getCompany} Positive={Positive} Negative={Negative}
-    fullInformation={fullInformation} historyList={historyList} companyNull={companyNull} updateRegions={updateRegions} />
+
+
+  return <Context.Provider value={{
+    companyNull, searchCompany, clearCheckbox, getRegion, updateRegions, list, setLoadingFalse, company, verificatePartner, loading, getStatement, getInformation, getCompany, Positive, Negative, fullInformation, historyList
+  }}>
+    <App regions={regions} company={company} companyNull={companyNull} history={history} />
+  </Context.Provider>
 }
 
 const AppContainerWithRouter = withRouter(AppContainer);

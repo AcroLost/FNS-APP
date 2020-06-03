@@ -3,8 +3,12 @@ import React, { useEffect } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import { Spin } from 'antd';
 import './CompanyList.scss';
+import { useContext } from 'react';
+import { Context } from '../../context';
 
-const CompanyList = ({ history, companyNull, list, onGetCompany, loading }) => {
+const CompanyList = ({ history }) => {
+
+  const { companyNull, list, loading, getCompany } = useContext(Context);
 
   useEffect(() => {
     companyNull();
@@ -29,7 +33,7 @@ const CompanyList = ({ history, companyNull, list, onGetCompany, loading }) => {
               list.map((item) => {
 
                 return <div key={item.ИНН}
-                  onClick={() => onGetCompany(item)}
+                  onClick={() => getCompany(item)}
                   className='company'>
 
                   <NavLink to={`/home/company_list/${item.НаимСокрЮЛ}`}

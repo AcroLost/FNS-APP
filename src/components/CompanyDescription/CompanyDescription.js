@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Chart from '../chart/chart';
 
 import { Spin, Collapse } from 'antd';
 import './CompanyDescription.scss';
+import { Context } from '../../context';
 
 const { Panel } = Collapse;
 
-const CompanyDescription = ({ positive, negative, status }) => {
+const CompanyDescription = ({ status }) => {
 
+  const { Positive, Negative } = useContext(Context)
   const active = status === "Действующее" ? 'active' : 'unActive';
 
   return (
     <div className="information">
-      {!positive || !negative
+      {!Positive || !Negative
 
         ? <Spin style={{ margin: '100px auto' }} size="large" />
 
@@ -20,20 +22,20 @@ const CompanyDescription = ({ positive, negative, status }) => {
 
           <div>
             <b style={{ fontSize: 17 }}>Позитивные факторы:</b>
-            {Object.keys(positive).length > 0
+            {Object.keys(Positive).length > 0
 
-              ? Object.keys(positive).map((item) => {
+              ? Object.keys(Positive).map((item) => {
 
-                if (typeof positive[item] === 'object') {
+                if (typeof Positive[item] === 'object') {
 
                   return <Collapse key={item} style={{ marginLeft: 7 }}>
                     <Panel header={item}>
-                      {Object.keys(positive[item]).map((i) => {
+                      {Object.keys(Positive[item]).map((i) => {
 
                         return (
                           <span key={i}>
                             <span>
-                              <b>{i}:</b> {positive[item][i]}
+                              <b>{i}:</b> {Positive[item][i]}
                             </span>
                             <hr />
                           </span>
@@ -44,7 +46,7 @@ const CompanyDescription = ({ positive, negative, status }) => {
                 }
 
                 return <p key={item} style={{ marginLeft: 15 }}>
-                  <b>{item}:</b> {positive[item]}
+                  <b>{item}:</b> {Positive[item]}
                 </p>
 
               })
@@ -56,18 +58,18 @@ const CompanyDescription = ({ positive, negative, status }) => {
 
             <b style={{ fontSize: 17 }}>Негативные факторы:</b>
 
-            {Object.keys(negative).length > 0
-              ? Object.keys(negative).map((item) => {
+            {Object.keys(Negative).length > 0
+              ? Object.keys(Negative).map((item) => {
 
-                if (typeof negative[item] === 'object') {
+                if (typeof Negative[item] === 'object') {
 
                   return <Collapse key={item} style={{ marginLeft: 7 }}>
                     <Panel header={item}>
-                      {Object.keys(negative[item]).map((i) => {
+                      {Object.keys(Negative[item]).map((i) => {
                         return (
                           <span key={i}>
                             <span>
-                              <b>{i}:</b> {negative[item][i]}
+                              <b>{i}:</b> {Negative[item][i]}
                             </span>
                             <hr />
                           </span>
@@ -78,7 +80,7 @@ const CompanyDescription = ({ positive, negative, status }) => {
                 }
 
                 return <p key={item} style={{ marginLeft: 15 }}>
-                  <b>{item}:</b> {negative[item]}
+                  <b>{item}:</b> {Negative[item]}
                 </p>;
               })
               : <p style={{ marginLeft: 15 }}>Негативные факторы отсутствуют</p>
@@ -87,8 +89,8 @@ const CompanyDescription = ({ positive, negative, status }) => {
           <hr />
           <p>Статус: <span className={active}>{status}</span></p>
 
-          <Chart positive={positive}
-            negative={negative} />
+          <Chart positive={Positive}
+            negative={Negative} />
         </div>
       }
     </div>
